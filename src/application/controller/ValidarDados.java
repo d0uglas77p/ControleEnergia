@@ -7,7 +7,7 @@ import application.model.entity.Usuario;
 
 import java.sql.SQLException;
 
-// Classe de validação e exeções dos dados cadastrais
+// Classe de validação e exeções dos dados
 public class ValidarDados {
     public static void validarCadastro(Usuario usuario) throws IllegalArgumentException {
         // Verifica se os campos obrigatórios estão vazios

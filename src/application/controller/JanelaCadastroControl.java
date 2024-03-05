@@ -4,7 +4,6 @@ import javax.swing.*;
 
 /**
  * control --> events --> view
-
  * view = vizualização
  * events = eventos/ações dos objetos
  * control = classe para criação dos objetos interáveis
@@ -13,7 +12,7 @@ import javax.swing.*;
 
 public class JanelaCadastroControl extends JFrame {
 
-    // Atributo dos objetos para intermedio
+    // Atributo dos objetos interáveis
     private JLabel txtNome = new JLabel("Nome");
     private JLabel txtSobrenome = new JLabel("Sobrenome");
     private JLabel txtTelefone = new JLabel("Telefone");

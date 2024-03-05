@@ -52,6 +52,7 @@ public class EnderecoDAO {
             try (Connection conn = new ConexaoBD().conectar();
                  PreparedStatement statement = conn.prepareStatement(
                          "INSERT INTO endereco (cep, rua, numero, bairro, cidade, estado, usuario_id) VALUES (?, ?, ?, ?, ?, ?, ?)")) {
+
                 // Definindo os valores para os parâmetros do PreparedStatement
                 statement.setString(1, endereco.getCep());
                 statement.setString(2, endereco.getRua());
@@ -65,7 +66,7 @@ public class EnderecoDAO {
                 statement.executeUpdate();
                 return true; // Indica que foi cadastrado
             }
-        } catch (IllegalArgumentException exception) { // Captura de erro
+        } catch (IllegalArgumentException exception) {
             exception.printStackTrace();
         }
         return false;
@@ -78,6 +79,7 @@ public class EnderecoDAO {
             try (Connection conn = new ConexaoBD().conectar();
                  PreparedStatement statement = conn.prepareStatement(
                          "UPDATE endereco SET cep=?, rua=?, numero=?, bairro=?, cidade=?, estado=? WHERE usuario_id=?")) {
+
                 // Definindo os valores para os parâmetros do PreparedStatement
                 statement.setString(1, endereco.getCep());
                 statement.setString(2, endereco.getRua());
@@ -91,7 +93,7 @@ public class EnderecoDAO {
                 int linhasAfetadas = statement.executeUpdate();
                 return linhasAfetadas > 0; // Retorna true se a atualização for bem-sucedida
             }
-        } catch (IllegalArgumentException exception) { // Captura de erro
+        } catch (IllegalArgumentException exception) {
             exception.printStackTrace();
         }
         return false;
@@ -113,7 +115,6 @@ public class EnderecoDAO {
             e.printStackTrace();
             return false;
         }
-
     }
 
     // Metodo para buscar o endereco do usuario
@@ -139,7 +140,6 @@ public class EnderecoDAO {
         }
         return null;
     }
-
 
     private Endereco construirUsuario(ResultSet resultSet) throws  SQLException {
         Endereco endereco = new Endereco();

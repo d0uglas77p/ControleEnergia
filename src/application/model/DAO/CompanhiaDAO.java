@@ -15,7 +15,7 @@ public class CompanhiaDAO {
 
     // Método para inserir um novo usuário no banco de dados
     public boolean inserirNovaCompanhia(Companhia companhia, int usuarioId) {
-            // Se extiver ok na classe ValidarCadastro, irá fazer a inserção dos dados na tabela comapnhia
+            // Se extiver ok na classe ValidarCadastro, irá fazer a inserção dos dados na tabela companhia
             try {
                 ValidarDados.validarCompanhia(companhia);
                 try (Connection conn = new ConexaoBD().conectar();
@@ -36,9 +36,9 @@ public class CompanhiaDAO {
                     return true; // Retorna que foi cadastrado
 
                 } catch (SQLException e) {
-                    e.printStackTrace(); // Captura erro
+                    e.printStackTrace();
                 }
-            } catch (IllegalArgumentException exception) { // Captura de erro
+            } catch (IllegalArgumentException exception) {
                 exception.printStackTrace();
             }
             return false;

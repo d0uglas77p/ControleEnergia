@@ -12,7 +12,7 @@ import javax.swing.*;
 
 public class JanelaLoginControl extends JFrame {
 
-    // Atributo dos objetos para intermedio das classes
+    // Atributo dos objetos interáveiss
     private JLabel txtUsuario = new JLabel("Usuário");
     private JLabel txtSenha = new JLabel("Senha");
     private JTextField fieldUsuario = new JTextField(20);
