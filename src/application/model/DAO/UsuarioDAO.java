@@ -35,7 +35,7 @@ public class UsuarioDAO {
 
                 return true; // Retorna que foi cadastrado
             } catch (SQLException e) {
-                e.printStackTrace(); // Captura erro
+                e.printStackTrace();
             }
         } catch (IllegalArgumentException e) {
             // Exibir mensagem de erro para usuario
@@ -61,7 +61,6 @@ public class UsuarioDAO {
         return false; // Retorna false se ocorrer algum erro
     }
 
-
     // Método para verificar se o usuário já existe no banco de dados - por nome
     public boolean verificarUsuario(String nomeUsuario) throws SQLException {
         try (Connection conn = new ConexaoBD().conectar();
@@ -79,7 +78,6 @@ public class UsuarioDAO {
         return false; // Retorna false se ocorrer algum erro
     }
 
-
     // Método para buscar um usuario pelo nome do usuario no banco de dados
     public Usuario buscarUsuario(String nomeUsuario) {
         try (Connection conn = new ConexaoBD().conectar();
@@ -96,7 +94,7 @@ public class UsuarioDAO {
                 return construirUsuario(resultSet);
             }
         } catch (SQLException e) {
-            e.printStackTrace(); // Captura o erro
+            e.printStackTrace();
         }
         return null; // retorna null se não encontrar o usuario
     }
@@ -117,11 +115,10 @@ public class UsuarioDAO {
                 return construirUsuario(resultSet);
             }
         } catch (SQLException e) {
-            e.printStackTrace(); // Captura o erro
+            e.printStackTrace();
         }
         return  null; // retorna null se não encontrar o id do usuário
     }
-
 
     // Método para alterar os dados do usuário no banco de dados
     public boolean alterarDadosUsuario(Usuario alterarDados) {
@@ -149,7 +146,7 @@ public class UsuarioDAO {
                 e.printStackTrace();
                 return false;
             }
-        } catch (IllegalArgumentException exception) { // Captura de erro
+        } catch (IllegalArgumentException exception) {
             exception.printStackTrace();
         }
         return false;

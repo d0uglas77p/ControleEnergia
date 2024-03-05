@@ -23,7 +23,7 @@ public class ConexaoBD {
 
     // Método para criar a tabela usuarios no banco de dados
     public void criarTabelaUsuario() {
-        try (Connection conn = conectar(); // Abre uma requisição
+        try (Connection conn = conectar();
              Statement statement = conn.createStatement()) {
             // Define a instrução SQL para criar a tabela
             String sql = "CREATE TABLE IF NOT EXISTS usuarios (" +
@@ -46,7 +46,7 @@ public class ConexaoBD {
 
     // Método para criar a tabela de endereços no banco de dados
     public void criarTabelaEndereco() {
-        try (Connection conn = conectar(); // Abre uma requisição
+        try (Connection conn = conectar();
             Statement statement = conn.createStatement()) {
 
             String sql = "CREATE TABLE IF NOT EXISTS endereco (" +

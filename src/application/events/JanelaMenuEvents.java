@@ -18,6 +18,7 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.List;
 
+// Classe responsável para ações dos objetos interáveis
 public class JanelaMenuEvents extends JanelaMenuControl {
 
     private UsuarioDAO usuarioDAO;
@@ -136,6 +137,7 @@ public class JanelaMenuEvents extends JanelaMenuControl {
                 getInfoTarifa().setVisible(true);
                 getCadastrarCompanhia().setVisible(true);
 
+                // Grupo A vizualização
                 getCheckGrupoA().addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
@@ -147,6 +149,7 @@ public class JanelaMenuEvents extends JanelaMenuControl {
                     }
                 });
 
+                // Grupo B vizualização
                 getCheckGrupoB().addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
@@ -158,12 +161,18 @@ public class JanelaMenuEvents extends JanelaMenuControl {
                     }
                 });
 
+                // Método responsável para cadastrar novas companhias
                 getCadastrarCompanhia().addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
+                        // Obter usuário logado
                         String usuarioLogado = getLogado().getText();
+                        // Obter usuário logado no banco de dados
                         Usuario usuarioAtual = usuarioDAO.buscarUsuario(usuarioLogado);
+
                         Companhia companhia = new Companhia();
+
+                        // Adiciona os dados da nova companhia
                         Object selecaoFornecimento = getComboTipoFornecimento().getSelectedItem();
 
                         companhia.setNomeCompanhia(getFieldNomeCompanhia().getText());
@@ -174,7 +183,7 @@ public class JanelaMenuEvents extends JanelaMenuControl {
                         companhia.setTarifa(getFieldTarifa().getText());
 
                         if (new CompanhiaDAO().inserirNovaCompanhia(companhia, usuarioAtual.getId())) {
-
+                            // Limpa os campos de dados que estavam preenchidos após a m
                             getFieldNomeCompanhia().setText("");
                             getFieldCnpjCompanhia().setText("");
                             getFieldTelefoneCompanhia().setText("");
@@ -333,6 +342,7 @@ public class JanelaMenuEvents extends JanelaMenuControl {
                         String usuarioLogado = getLogado().getText();
                         // Obter usuário logado no banco de dados
                         Usuario usuarioAtual = usuarioDAO.buscarUsuario(usuarioLogado);
+
                         Endereco endereco = new Endereco();
 
                         // Obter os dados do formulario
@@ -399,14 +409,15 @@ public class JanelaMenuEvents extends JanelaMenuControl {
         });
     }
 
-
+    // Método para atualizar a lista de companhia
     public void atualizarLista() {
         String usuarioLogado = getLogado().getText();
         Usuario usuarioAtual = usuarioDAO.buscarUsuario(usuarioLogado);
         List<Companhia> companhias  = companhiaDAO.buscarCompanhias(usuarioAtual.getId());
-        atualizarTabelaCompanhias(companhias);
+        atualizarTabelaCompanhias(companhias); // Pega a atualização da tabela para atualizar a lista de companhia
     }
 
+    // Método para atualizar a tabela de companhia vizual
     private void atualizarTabelaCompanhias(List<Companhia> companhias) {
         DefaultTableModel model = (DefaultTableModel) getTabelaCompanhia().getModel();
         model.setRowCount(0);

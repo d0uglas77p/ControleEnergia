@@ -12,7 +12,7 @@ import javax.swing.table.DefaultTableModel;
  **/
 
 public class JanelaMenuControl extends JFrame {
-    // Atributo dos objetos para intermedio
+    // Atributo dos objetos interáveis
 
     // Frame
     private JFrame frameMenu = new JFrame("Controle de Energia - Menu");
