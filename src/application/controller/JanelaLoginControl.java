@@ -9,7 +9,6 @@ import javax.swing.*;
  * control  = classe para criação dos objetos interáveis
  * model = requisições
  **/
-
 public class JanelaLoginControl extends JFrame {
 
     // Atributo dos objetos interáveiss

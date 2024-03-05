@@ -45,6 +45,7 @@ public class ComboBoxDtNascimento {
         return arrayNumerico;
     }
 
+    // Formatar data para string
     public String formatarDataSelecionada() {
         String diaSelecionado = (String) comboDia.getSelectedItem();
         String mesSelecionado = (String) comboMes.getSelectedItem();

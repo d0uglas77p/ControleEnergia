@@ -686,7 +686,6 @@ public class JanelaMenuView extends JanelaMenuEvents {
         panelEnderecoAtual.setBounds(370,40,290,177);
         getPanelCadastro().add(panelEnderecoAtual);
 
-
         // - PAINEL DE ENDEREÇO (TABELA MAIOR)-
         JPanel panelEndereco = new JPanel();
         panelEndereco.setBorder(BorderFactory.createTitledBorder("                                                       " +
