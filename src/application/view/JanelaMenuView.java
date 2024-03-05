@@ -371,10 +371,12 @@ public class JanelaMenuView extends JanelaMenuEvents {
             }
 
             // Modelo das celulas
+
             DefaultTableModel model = new DefaultTableModel(data, header);
+            getTabelaCompanhia().setModel(model);
 
             // Criar a tabela
-            getTabelaCompanhia();
+            //JTable table = new JTable(model);
             JScrollPane scrollPane = new JScrollPane(getTabelaCompanhia());
             scrollPane.setBounds(25,400,630,130);
             getPanelCompanhia().add(scrollPane);

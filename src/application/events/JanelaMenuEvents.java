@@ -174,14 +174,14 @@ public class JanelaMenuEvents extends JanelaMenuControl {
                         companhia.setTarifa(getFieldTarifa().getText());
 
                         if (new CompanhiaDAO().inserirNovaCompanhia(companhia, usuarioAtual.getId())) {
-                            atualizarLista();
+
                             getFieldNomeCompanhia().setText("");
                             getFieldCnpjCompanhia().setText("");
                             getFieldTelefoneCompanhia().setText("");
                             getFieldNumMedidor().setText("");
                             getFieldTarifa().setText("");
                             JOptionPane.showMessageDialog(null, "Companhia cadastrada com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-
+                            atualizarLista();
                         }  else {
                         JOptionPane.showMessageDialog(null, "Falha ao alterar o endereço!\nVerifique se os campos estão vazios e tenta novamente.", "Erro", JOptionPane.ERROR_MESSAGE);
                         }
@@ -398,6 +398,7 @@ public class JanelaMenuEvents extends JanelaMenuControl {
             }
         });
     }
+
 
     public void atualizarLista() {
         String usuarioLogado = getLogado().getText();
