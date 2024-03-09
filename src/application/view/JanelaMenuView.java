@@ -355,35 +355,36 @@ public class JanelaMenuView extends JanelaMenuEvents {
         // lista de companhias cadastradas
         List<Companhia> companhiasUsuario = companhiaDAO.buscarCompanhias(usuario.getId());
 
-        // Adicionando colunas na tabela de companhia
-        if (!companhiasUsuario.isEmpty()) {
-            // Nome das colunas
-            String[] header = {"Nome", "CNPJ", "Telefone", "Fornecimento", "Medidor", "Tarifa"};
+        // Nome das colunas
+        String[] header = {"Nome", "CNPJ", "Telefone", "Fornecimento", "Medidor", "Tarifa"};
 
-            String[][] data = new String[companhiasUsuario.size()][header.length];
+        String[][] data = new String[companhiasUsuario.size()][header.length];
 
-            for (int i = 0; i < companhiasUsuario.size(); i++) {
-                Companhia companhia = companhiasUsuario.get(i);
-                data[i] = new String[] {
-                        companhia.getNomeCompanhia(),
-                        companhia.getCnpj(),
-                        companhia.getTelefoneCompanhia(),
-                        companhia.getTipoFornecimento(),
-                        companhia.getMedidor(),
-                        companhia.getTarifa(),
-                };
+            if (!companhiasUsuario.isEmpty()) {
+                for (int i = 0; i < companhiasUsuario.size(); i++) {
+                    Companhia companhia = companhiasUsuario.get(i);
+                    data[i] = new String[]{
+                            companhia.getNomeCompanhia(),
+                            companhia.getCnpj(),
+                            companhia.getTelefoneCompanhia(),
+                            companhia.getTipoFornecimento(),
+                            companhia.getMedidor(),
+                            companhia.getTarifa(),
+                    };
+                }
+            } else {
+                data = new String[0][header.length];
             }
 
-            // Modelo da tabela
-            DefaultTableModel model = new DefaultTableModel(data, header);
-            getTabelaCompanhia().setModel(model);
+        // Modelo da tabela
+        DefaultTableModel model = new DefaultTableModel(data, header);
+        getTabelaCompanhia().setModel(model);
 
-            // Criar a tabela
-            JScrollPane scrollPane = new JScrollPane(getTabelaCompanhia());
-            scrollPane.setBounds(25,400,630,130);
-            getPanelCompanhia().add(scrollPane);
-        } else {
-        }
+        // Criar a tabela
+        JScrollPane scrollPane = new JScrollPane(getTabelaCompanhia());
+        scrollPane.setBounds(25,400,630,130);
+        getPanelCompanhia().add(scrollPane);
+
         // -------------------------------------------FIM COMPANHIA------------------------------------------------- //
 
 
