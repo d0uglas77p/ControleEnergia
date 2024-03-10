@@ -15,7 +15,11 @@ public class CompanhiaDAO {
 
     // Método para inserir um novo usuário no banco de dados
     public boolean inserirNovaCompanhia(Companhia companhia, int usuarioId) {
-            // Se extiver ok na classe ValidarCadastro, irá fazer a inserção dos dados na tabela companhia
+
+            if (verificarCnpjExistente(companhia.getCnpj(), usuarioId)) {
+                return false;
+            }
+
             try {
                 ValidarDados.validarCompanhia(companhia);
                 try (Connection conn = new ConexaoBD().conectar();
@@ -42,6 +46,27 @@ public class CompanhiaDAO {
                 exception.printStackTrace();
             }
             return false;
+    }
+
+    // Método para verificar se já existe um CNPJ da companhia cadastrado
+    private boolean verificarCnpjExistente(String cnpj, int usuarioId) {
+        try (Connection conn = new ConexaoBD().conectar();
+             PreparedStatement statement = conn.prepareStatement(
+                     "SELECT COUNT(*) FROM companhias WHERE cnpj=? AND usuario_id=?")) {
+
+            statement.setString(1, cnpj);
+            statement.setInt(2, usuarioId);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    int count = resultSet.getInt(1);
+                    return count > 0; // Retorna true se o CNPJ existe para o usuário específico
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     // Metodo para buscar companhia do usuario
@@ -71,4 +96,25 @@ public class CompanhiaDAO {
         }
         return companhias;
     }
+
+    // Método para excluir companhia do banco por cnpj
+    public boolean excluirCompanhiaCnpj(String cnpj, int usuarioId) {
+        try (Connection conn = new ConexaoBD().conectar();
+             PreparedStatement statement = conn.prepareStatement(
+                     "DELETE FROM companhias WHERE cnpj=? AND usuario_id=?")) {
+
+            statement.setString(1, cnpj);
+            statement.setInt(2, usuarioId);
+
+            // Executando a exclusão no banco de dados
+            int rowsAffected = statement.executeUpdate();
+
+            return rowsAffected > 0; // Retorna true se pelo menos uma linha foi afetada (excluída)
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
 }

@@ -35,11 +35,11 @@ public class JanelaLoginEvents extends JanelaLoginControl {
                             dispose(); // fechar janela de login
                         } else {
                             // Senha incorreta
-                            JOptionPane.showMessageDialog(null, "Senha incorreta!","Erro de login", JOptionPane.ERROR_MESSAGE);
+                            JOptionPane.showMessageDialog(null, "Senha incorreta!","ERRO DE LOGIN", JOptionPane.ERROR_MESSAGE);
                         }
                     } else {
                         // usuario não econtrado
-                        JOptionPane.showMessageDialog(null, "Usuário não encontrado!","Erro de login!",JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Usuário não encontrado!","ERRO DE LOGIN",JOptionPane.ERROR_MESSAGE);
                     }
                 } catch (SQLException ex) {
                     ex.printStackTrace(); // Tratando a exceção do banco de dados

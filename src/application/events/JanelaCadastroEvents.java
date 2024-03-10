@@ -53,7 +53,7 @@ public class JanelaCadastroEvents extends JanelaCadastroControl {
                 // Inserir no banco de dados
                 if (new UsuarioDAO().inserirUsuario(novoUsuario)) {
                     // Cadastro efetuado com sucesso
-                    JOptionPane.showMessageDialog(null, "Cadastro efetuado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Cadastro efetuado com sucesso!", "SUCESSO", JOptionPane.INFORMATION_MESSAGE);
                     // Se for efetuado o cadastro, irá fechar
                     JanelaLoginView janelaLoginView = new JanelaLoginView(); // Cria a janela de login
                     janelaLoginView.setVisible(true); // Seta a visualização da janela de login
