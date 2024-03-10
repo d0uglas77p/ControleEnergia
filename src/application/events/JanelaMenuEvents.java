@@ -136,6 +136,7 @@ public class JanelaMenuEvents extends JanelaMenuControl {
                 getFieldTarifa().setVisible(true);
                 getInfoTarifa().setVisible(true);
                 getCadastrarCompanhia().setVisible(true);
+                getBtnExcluirCompanhia().setVisible(true);
 
                 // Grupo A vizualização
                 getCheckGrupoA().addActionListener(new ActionListener() {
@@ -183,16 +184,50 @@ public class JanelaMenuEvents extends JanelaMenuControl {
                         companhia.setTarifa(getFieldTarifa().getText());
 
                         if (new CompanhiaDAO().inserirNovaCompanhia(companhia, usuarioAtual.getId())) {
-                            // Limpa os campos de dados que estavam preenchidos após a m
+                            // Limpa os campos de dados que estavam preenchidos
                             getFieldNomeCompanhia().setText("");
                             getFieldCnpjCompanhia().setText("");
                             getFieldTelefoneCompanhia().setText("");
                             getFieldNumMedidor().setText("");
                             getFieldTarifa().setText("");
-                            JOptionPane.showMessageDialog(null, "Companhia cadastrada com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                            JOptionPane.showMessageDialog(null, "Companhia cadastrada com sucesso!", "SUCESSO", JOptionPane.INFORMATION_MESSAGE);
                             atualizarLista();
                         }  else {
-                        JOptionPane.showMessageDialog(null, "Falha ao alterar o endereço!\nVerifique se os campos estão vazios e tenta novamente.", "Erro", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Falha ao cadastrar companhia!\nVerifique se os campos estão vazios \nou se já contém uma companhia com o mesmo CNPJ cadastrado.", "ERRO", JOptionPane.ERROR_MESSAGE);
+                        }
+                    }
+                });
+
+                // Método responsável para excluir companhia
+                getBtnExcluirCompanhia().addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        // Seleciona uma linha da tabela de companhia
+                        int selecionaLinha = getTabelaCompanhia().getSelectedRow();
+
+                        if (selecionaLinha != -1) {
+                            // Obtém o CNPJ da linha selecionada
+                            String cnpj = (String) getTabelaCompanhia().getValueAt(selecionaLinha, 1);
+
+                            // Obter usuário logado
+                            String usuarioLogado = getLogado().getText();
+
+                            // Obter usuário logado no banco de dados
+                            Usuario usuarioAtual = usuarioDAO.buscarUsuario(usuarioLogado);
+
+                            int resposta = JOptionPane.showConfirmDialog(null, "Companhia será apagada, tem certeza que deseja excluir?", "EXCLUIR CONTA", JOptionPane.CANCEL_OPTION);
+                            if (resposta == JOptionPane.OK_OPTION) {
+                                // Exclui a companhia por CNPJ
+                                if (new CompanhiaDAO().excluirCompanhiaCnpj(cnpj, usuarioAtual.getId())) {
+                                    atualizarLista();
+                                    JOptionPane.showMessageDialog(null, "Companhia excluída com sucesso!", "SUCESSO", JOptionPane.INFORMATION_MESSAGE);
+                                } else {
+                                    JOptionPane.showMessageDialog(null, "Falha ao excluir a companhia.", "ERRO", JOptionPane.ERROR_MESSAGE);
+                                }
+                            }
+
+                        }else {
+                            JOptionPane.showMessageDialog(null, "Selecione uma companhia para excluir.", "AVISO", JOptionPane.WARNING_MESSAGE);
                         }
                     }
                 });
@@ -270,7 +305,7 @@ public class JanelaMenuEvents extends JanelaMenuControl {
                                 getFieldNovoEmail().setText("");
                                 JOptionPane.showMessageDialog(null, "Dados alterados com sucesso!");
                             } else {
-                                JOptionPane.showMessageDialog(null, "Falha ao alterar os dados!\nVerifique se os campos estão vazios e tenta novamente.", "Erro", JOptionPane.ERROR_MESSAGE);
+                                JOptionPane.showMessageDialog(null, "Falha ao alterar os dados!\nVerifique se os campos estão vazios e tenta novamente.", "ERRO", JOptionPane.ERROR_MESSAGE);
                             }
                         }
                     }
@@ -317,16 +352,16 @@ public class JanelaMenuEvents extends JanelaMenuControl {
 
                                         } else {
                                             // Falha ao exclui usuario
-                                            JOptionPane.showMessageDialog(null, "Erro ao excluir usuário.", "Erro", JOptionPane.ERROR_MESSAGE);
+                                            JOptionPane.showMessageDialog(null, "Erro ao excluir usuário.", "ERRO", JOptionPane.ERROR_MESSAGE);
                                         }
                                     }
                                 } else {
                                     // usuario logado e Senha incorreta
-                                    JOptionPane.showMessageDialog(null, "Usuário ou Senha incorreta!","Erro de login", JOptionPane.ERROR_MESSAGE);
+                                    JOptionPane.showMessageDialog(null, "Usuário ou Senha incorreta!","ERRO DE LOGIN", JOptionPane.ERROR_MESSAGE);
                                 }
                             } else {
                                 // usuario não econtrado
-                                JOptionPane.showMessageDialog(null, "Usuário não encontrado!","Erro de login!",JOptionPane.ERROR_MESSAGE);
+                                JOptionPane.showMessageDialog(null, "Usuário não encontrado!","ERRO DE LOGIN",JOptionPane.ERROR_MESSAGE);
                             }
                         } catch (SQLException ex) {
                             ex.printStackTrace(); // Tratando a exceção
@@ -371,9 +406,9 @@ public class JanelaMenuEvents extends JanelaMenuControl {
                             getFieldCidade().setText("");
                             getFieldEstado().setText("");
                             // Cadastro efetuado com sucesso
-                            JOptionPane.showMessageDialog(null, "Endereço atualizado com sucesso!\nSe for a primeira atualização do endereço, faça o login novamente para a atualização do sistema, obrigado!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                            JOptionPane.showMessageDialog(null, "Endereço atualizado com sucesso!\nSe for a primeira atualização do endereço, faça o login novamente para a atualização do sistema, obrigado!", "SUCESSO", JOptionPane.INFORMATION_MESSAGE);
                         } else {
-                            JOptionPane.showMessageDialog(null, "Falha ao alterar o endereço!\nVerifique se os campos estão vazios e tenta novamente.", "Erro", JOptionPane.ERROR_MESSAGE);
+                            JOptionPane.showMessageDialog(null, "Falha ao alterar o endereço!\nVerifique se os campos estão vazios e tenta novamente.", "ERRO", JOptionPane.ERROR_MESSAGE);
                         }
                     }
                 });

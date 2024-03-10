@@ -343,13 +343,13 @@ public class JanelaMenuView extends JanelaMenuEvents {
         // Botão de cadastro da companhia
         getCadastrarCompanhia().setVisible(false);
         getCadastrarCompanhia().setBounds(450,350,90,26);
-        getCadastrarCompanhia().setFont(new Font("Arial",Font.BOLD,12)); // Fonte do texto
+        getCadastrarCompanhia().setFont(new Font("Arial",Font.BOLD,12));
         getPanelCompanhia().add(getCadastrarCompanhia());
 
         // Painel de encargos da companhia
         JPanel panelEncargo = new JPanel();
-        panelEncargo.setBorder(BorderFactory.createTitledBorder("ENCARGOS")); // Borda personalizada do painel
-        panelEncargo.setBounds(350,25,309,325); // Posição e tamanho do painel
+        panelEncargo.setBorder(BorderFactory.createTitledBorder("ENCARGOS"));
+        panelEncargo.setBounds(350,25,309,325);
         getPanelCompanhia().add(panelEncargo);
 
         // lista de companhias cadastradas
@@ -382,8 +382,14 @@ public class JanelaMenuView extends JanelaMenuEvents {
 
         // Criar a tabela
         JScrollPane scrollPane = new JScrollPane(getTabelaCompanhia());
-        scrollPane.setBounds(25,400,630,130);
+        scrollPane.setBounds(25,400,630,100);
         getPanelCompanhia().add(scrollPane);
+
+        // Excluir companhia cadastrada
+        getBtnExcluirCompanhia().setVisible(false);
+        getBtnExcluirCompanhia().setBounds(270,515,150,26);
+        getBtnExcluirCompanhia().setFont(new Font("Arial", Font.BOLD,12));
+        getPanelCompanhia().add(getBtnExcluirCompanhia());
 
         // -------------------------------------------FIM COMPANHIA------------------------------------------------- //
 

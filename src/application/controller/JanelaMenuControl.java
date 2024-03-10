@@ -95,6 +95,7 @@ public class JanelaMenuControl extends JFrame {
     private JButton cadastrarCompanhia = new JButton("Cadastrar");
     private ButtonGroup subGrupo = new ButtonGroup();
     private JTable tabelaCompanhia = new JTable();
+    private JButton btnExcluirCompanhia = new JButton("Excluir Companhia");
 
     public JTextField getFieldNomeCompanhia() {
         return fieldNomeCompanhia;
@@ -146,6 +147,9 @@ public class JanelaMenuControl extends JFrame {
     }
     public JTable getTabelaCompanhia() {
         return tabelaCompanhia;
+    }
+    public JButton getBtnExcluirCompanhia() {
+        return btnExcluirCompanhia;
     }
 
     // MENU CADASTRO
