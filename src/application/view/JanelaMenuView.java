@@ -381,6 +381,7 @@ public class JanelaMenuView extends JanelaMenuEvents {
         getTabelaCompanhia().setModel(model);
 
         // Criar a tabela
+        getPanelCompanhia().setVisible(false);
         JScrollPane scrollPane = new JScrollPane(getTabelaCompanhia());
         scrollPane.setBounds(25,400,630,100);
         getPanelCompanhia().add(scrollPane);
