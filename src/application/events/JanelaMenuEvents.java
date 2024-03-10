@@ -135,6 +135,7 @@ public class JanelaMenuEvents extends JanelaMenuControl {
                 getFieldNumMedidor().setVisible(true);
                 getFieldTarifa().setVisible(true);
                 getInfoTarifa().setVisible(true);
+                getTabelaCompanhia().setVisible(true);
                 getCadastrarCompanhia().setVisible(true);
                 getBtnExcluirCompanhia().setVisible(true);
 
