@@ -16,6 +16,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.util.List;
 
 // Classe responsável para ações dos objetos interáveis
@@ -182,19 +183,29 @@ public class JanelaMenuEvents extends JanelaMenuControl {
                         companhia.setTelefoneCompanhia(getFieldTelefoneCompanhia().getText());
                         companhia.setTipoFornecimento(selecaoFornecimento.toString());
                         companhia.setMedidor(getFieldNumMedidor().getText());
-                        companhia.setTarifa(getFieldTarifa().getText());
 
-                        if (new CompanhiaDAO().inserirNovaCompanhia(companhia, usuarioAtual.getId())) {
-                            // Limpa os campos de dados que estavam preenchidos
-                            getFieldNomeCompanhia().setText("");
-                            getFieldCnpjCompanhia().setText("");
-                            getFieldTelefoneCompanhia().setText("");
-                            getFieldNumMedidor().setText("");
-                            getFieldTarifa().setText("");
-                            JOptionPane.showMessageDialog(null, "Companhia cadastrada com sucesso!", "SUCESSO", JOptionPane.INFORMATION_MESSAGE);
-                            atualizarLista();
-                        }  else {
-                        JOptionPane.showMessageDialog(null, "Falha ao cadastrar companhia!\nVerifique se os campos estão vazios \nou se já contém uma companhia com o mesmo CNPJ cadastrado.", "ERRO", JOptionPane.ERROR_MESSAGE);
+                        // Verifica se a tarifa é um número
+                        try {
+                            double tarifa = Double.parseDouble(getFieldTarifa().getText());
+                            companhia.setTarifa(String.valueOf(tarifa));
+
+                            if (new CompanhiaDAO().inserirNovaCompanhia(companhia, usuarioAtual.getId())) {
+                                // Limpa os campos de dados que estavam preenchidos
+                                getFieldNomeCompanhia().setText("");
+                                getFieldCnpjCompanhia().setText("");
+                                getFieldTelefoneCompanhia().setText("");
+                                getFieldNumMedidor().setText("");
+                                getFieldTarifa().setText("");
+                                JOptionPane.showMessageDialog(null, "Companhia cadastrada com sucesso!", "SUCESSO", JOptionPane.INFORMATION_MESSAGE);
+                                atualizarLista();
+                            }  else {
+                                JOptionPane.showMessageDialog(null, "Falha ao cadastrar companhia!\nVerifique se os campos estão vazios \nou se já contém uma companhia com o mesmo CNPJ cadastrado.", "ERRO", JOptionPane.ERROR_MESSAGE);
+                            }
+
+                        } catch (NumberFormatException exception) {
+                            JOptionPane.showMessageDialog(null, "Atenção, tarifa deverá ser um número!", "ERRO", JOptionPane.ERROR_MESSAGE);
+                            exception.printStackTrace();
+                            return;
                         }
                     }
                 });
@@ -458,13 +469,18 @@ public class JanelaMenuEvents extends JanelaMenuControl {
         DefaultTableModel model = (DefaultTableModel) getTabelaCompanhia().getModel();
         model.setRowCount(0);
         for (Companhia companhia : companhias) {
+            String rs = "R$ ";
+            String tarifaString = companhia.getTarifa();
+            double tarifaDouble = Double.parseDouble(tarifaString);
+            DecimalFormat decimal = new DecimalFormat("#0.00");
+            String tarifaDecimal = decimal.format(tarifaDouble);
             Object[] row = {
                     companhia.getNomeCompanhia(),
                     companhia.getCnpj(),
                     companhia.getTelefoneCompanhia(),
                     companhia.getTipoFornecimento(),
                     companhia.getMedidor(),
-                    companhia.getTarifa()
+                    rs+tarifaDecimal,
             };
             model.addRow(row);
         }
