@@ -12,6 +12,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.util.List;
 
 // Classe front da Janela de Menu
@@ -301,15 +302,15 @@ public class JanelaMenuView extends JanelaMenuEvents {
         getPanelCompanhia().add(panelClassificacao);
 
         // Labels da tarifa da companhia
-        JLabel tarifaTxt = new JLabel("Tarifa de Energia");
-        tarifaTxt.setBounds(370,54,300,20);
+        JLabel tarifaTxt = new JLabel("Tarifa de Energia R$");
+        tarifaTxt.setBounds(390,54,300,20);
         tarifaTxt.setFont(new Font("Arial", Font.BOLD, 14));
         tarifaTxt.setForeground(Color.BLACK);
         getPanelCompanhia().add(tarifaTxt);
 
         // Field da tarifa da companhia
         getFieldTarifa().setVisible(false);
-        getFieldTarifa().setBounds(500,52,140,26);
+        getFieldTarifa().setBounds(534,50,62,26);
         getPanelCompanhia().add(getFieldTarifa());
 
         // Menssagem de atenção da tarifa da companhia
@@ -363,13 +364,18 @@ public class JanelaMenuView extends JanelaMenuEvents {
             if (!companhiasUsuario.isEmpty()) {
                 for (int i = 0; i < companhiasUsuario.size(); i++) {
                     Companhia companhia = companhiasUsuario.get(i);
+                    String rs = "R$ ";
+                    String tarifaString = companhia.getTarifa();
+                    double tarifaDouble = Double.parseDouble(tarifaString);
+                    DecimalFormat decimal = new DecimalFormat("#0.00");
+                    String tarifaDecimal = decimal.format(tarifaDouble);
                     data[i] = new String[]{
                             companhia.getNomeCompanhia(),
                             companhia.getCnpj(),
                             companhia.getTelefoneCompanhia(),
                             companhia.getTipoFornecimento(),
                             companhia.getMedidor(),
-                            companhia.getTarifa(),
+                            rs+tarifaDecimal,
                     };
                 }
             } else {
@@ -386,7 +392,7 @@ public class JanelaMenuView extends JanelaMenuEvents {
         scrollPane.setBounds(25,400,630,100);
         getPanelCompanhia().add(scrollPane);
 
-        // Excluir companhia cadastrada
+        // Botão para excluir companhia cadastrada
         getBtnExcluirCompanhia().setVisible(false);
         getBtnExcluirCompanhia().setBounds(270,515,150,26);
         getBtnExcluirCompanhia().setFont(new Font("Arial", Font.BOLD,12));
