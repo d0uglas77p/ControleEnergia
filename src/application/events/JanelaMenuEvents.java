@@ -10,7 +10,6 @@ import application.model.entity.Usuario;
 import application.view.JanelaLoginView;
 
 
-
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
@@ -197,7 +196,7 @@ public class JanelaMenuEvents extends JanelaMenuControl {
                                 getFieldNumMedidor().setText("");
                                 getFieldTarifa().setText("");
                                 JOptionPane.showMessageDialog(null, "Companhia cadastrada com sucesso!", "SUCESSO", JOptionPane.INFORMATION_MESSAGE);
-                                atualizarLista();
+                                atualizarListaCompanhias();
                             }  else {
                                 JOptionPane.showMessageDialog(null, "Falha ao cadastrar companhia!\nVerifique se os campos estão vazios \nou se já contém uma companhia com o mesmo CNPJ cadastrado.", "ERRO", JOptionPane.ERROR_MESSAGE);
                             }
@@ -231,7 +230,7 @@ public class JanelaMenuEvents extends JanelaMenuControl {
                             if (resposta == JOptionPane.OK_OPTION) {
                                 // Exclui a companhia por CNPJ
                                 if (new CompanhiaDAO().excluirCompanhiaCnpj(cnpj, usuarioAtual.getId())) {
-                                    atualizarLista();
+                                    atualizarListaCompanhias();
                                     JOptionPane.showMessageDialog(null, "Companhia excluída com sucesso!", "SUCESSO", JOptionPane.INFORMATION_MESSAGE);
                                 } else {
                                     JOptionPane.showMessageDialog(null, "Falha ao excluir a companhia.", "ERRO", JOptionPane.ERROR_MESSAGE);
@@ -418,7 +417,7 @@ public class JanelaMenuEvents extends JanelaMenuControl {
                             getFieldCidade().setText("");
                             getFieldEstado().setText("");
                             // Cadastro efetuado com sucesso
-                            JOptionPane.showMessageDialog(null, "Endereço atualizado com sucesso!\nSe for a primeira atualização do endereço, faça o login novamente para a atualização do sistema, obrigado!", "SUCESSO", JOptionPane.INFORMATION_MESSAGE);
+                            JOptionPane.showMessageDialog(null, "Endereço atualizado com sucesso!\nSe for a primeira atualização do endereço, faça o login novamente para a atualização do sistema!", "SUCESSO", JOptionPane.INFORMATION_MESSAGE);
                         } else {
                             JOptionPane.showMessageDialog(null, "Falha ao alterar o endereço!\nVerifique se os campos estão vazios e tenta novamente.", "ERRO", JOptionPane.ERROR_MESSAGE);
                         }
@@ -457,7 +456,7 @@ public class JanelaMenuEvents extends JanelaMenuControl {
     }
 
     // Método para atualizar a lista de companhia
-    public void atualizarLista() {
+    public void atualizarListaCompanhias() {
         String usuarioLogado = getLogado().getText();
         Usuario usuarioAtual = usuarioDAO.buscarUsuario(usuarioLogado);
         List<Companhia> companhias  = companhiaDAO.buscarCompanhias(usuarioAtual.getId());
