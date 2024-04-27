@@ -579,40 +579,46 @@ public class JanelaMenuView extends JanelaMenuEvents {
         estadotxt.setForeground(Color.BLACK);
         getPanelCadastro().add(estadotxt);
 
+        // lista de endereco do usuario
+        List<Endereco> enderecoUsuario = enderecoDAO.buscarEndereco(usuario.getId());
+
         // Labels que pega o endereço do usuario da tabela de endereço atual
-        Endereco enderecoUsuario = enderecoDAO.buscarEndereco(usuario.getId());
+        if (!enderecoUsuario.isEmpty()) {
+            for (int i = 0; i < enderecoUsuario.size(); i++) {
+                Endereco enderecoAtual = enderecoUsuario.get(i);
 
-        if (enderecoUsuario != null) {
-            getCepbd().setText(enderecoUsuario.getCep());
-            getCepbd().setBounds(425,53,200,20);
-            getCepbd().setFont(new Font("Calibri",Font.PLAIN,16));
-            getPanelCadastro().add(getCepbd());
+                getCepbd().setText(enderecoAtual.getCep());
+                getCepbd().setBounds(425, 53, 200, 20);
+                getCepbd().setFont(new Font("Calibri", Font.PLAIN, 16));
+                getPanelCadastro().add(getCepbd());
 
-            getRuabd().setText(enderecoUsuario.getRua());
-            getRuabd().setBounds(425,78,200,20);
-            getRuabd().setFont(new Font("Calibri",Font.PLAIN,16));
-            getPanelCadastro().add(getRuabd());
+                getRuabd().setText(enderecoAtual.getRua());
+                getRuabd().setBounds(425, 78, 200, 20);
+                getRuabd().setFont(new Font("Calibri", Font.PLAIN, 16));
+                getPanelCadastro().add(getRuabd());
 
-            getNumerobd().setText(enderecoUsuario.getNumero());
-            getNumerobd().setBounds(450,102,200,20);
-            getNumerobd().setFont(new Font("Calibri",Font.PLAIN,16));
-            getPanelCadastro().add(getNumerobd());
+                getNumerobd().setText(enderecoAtual.getNumero());
+                getNumerobd().setBounds(450, 102, 200, 20);
+                getNumerobd().setFont(new Font("Calibri", Font.PLAIN, 16));
+                getPanelCadastro().add(getNumerobd());
 
-            getBairrobd().setText(enderecoUsuario.getBairro());
-            getBairrobd().setBounds(440,128,200,20);
-            getBairrobd().setFont(new Font("Calibri",Font.PLAIN,16));
-            getPanelCadastro().add(getBairrobd());
+                getBairrobd().setText(enderecoAtual.getBairro());
+                getBairrobd().setBounds(440, 128, 200, 20);
+                getBairrobd().setFont(new Font("Calibri", Font.PLAIN, 16));
+                getPanelCadastro().add(getBairrobd());
 
-            getCidadebd().setText(enderecoUsuario.getCidade());
-            getCidadebd().setBounds(445,153,200,20);
-            getCidadebd().setFont(new Font("Calibri",Font.PLAIN,16));
-            getPanelCadastro().add(getCidadebd());
+                getCidadebd().setText(enderecoAtual.getCidade());
+                getCidadebd().setBounds(445, 153, 200, 20);
+                getCidadebd().setFont(new Font("Calibri", Font.PLAIN, 16));
+                getPanelCadastro().add(getCidadebd());
 
-            getEstadobd().setText(enderecoUsuario.getEstado());
-            getEstadobd().setBounds(445,178,200,20);
-            getEstadobd().setFont(new Font("Calibri",Font.PLAIN,16));
-            getPanelCadastro().add(getEstadobd());
+                getEstadobd().setText(enderecoAtual.getEstado());
+                getEstadobd().setBounds(445, 178, 200, 20);
+                getEstadobd().setFont(new Font("Calibri", Font.PLAIN, 16));
+                getPanelCadastro().add(getEstadobd());
+            }
         } else {
+
         }
 
         // Labels da tabela inferior de alterar endereço

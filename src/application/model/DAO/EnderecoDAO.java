@@ -3,12 +3,13 @@ package application.model.DAO;
 import application.controller.ValidarDados;
 import application.model.conexao.ConexaoBD;
 import application.model.entity.Endereco;
-import application.model.entity.Usuario;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class EnderecoDAO {
 
@@ -118,14 +119,17 @@ public class EnderecoDAO {
     }
 
     // Metodo para buscar o endereco do usuario
-    public Endereco buscarEndereco(int usuarioId) throws SQLException {
+    public List<Endereco> buscarEndereco(int usuarioId) {
+        List<Endereco> enderecos = new ArrayList<>();
+
         try (Connection conn = new ConexaoBD().conectar();
              PreparedStatement statement = conn.prepareStatement(
                      "SELECT * FROM endereco WHERE usuario_id=?")) {
 
             statement.setInt(1,usuarioId);
+
             try (ResultSet resultSet = statement.executeQuery()) {
-                if (resultSet.next()) {
+                while (resultSet.next()) {
                     Endereco endereco = new Endereco();
                     endereco.setCep(resultSet.getString("cep"));
                     endereco.setRua(resultSet.getString("rua"));
@@ -133,12 +137,13 @@ public class EnderecoDAO {
                     endereco.setBairro(resultSet.getString("bairro"));
                     endereco.setCidade(resultSet.getString("cidade"));
                     endereco.setEstado(resultSet.getString("estado"));
-
-                    return endereco;
+                    enderecos.add(endereco);
                 }
             }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-        return null;
+        return enderecos;
     }
 
     private Endereco construirUsuario(ResultSet resultSet) throws  SQLException {
