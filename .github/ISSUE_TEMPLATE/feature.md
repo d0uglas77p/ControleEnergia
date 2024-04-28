@@ -1,28 +1,30 @@
 ---
-name: Feature
-about: Sugira uma ideia para o aplicativo
-title: ''
+name: Sugestão de Nova Funcionalidade
+about: Sugira uma ideia para melhorar o aplicativo
+title: 'Breve título da funcionalidade'
 labels: Feature
 assignees: ''
 
 ---
 
-**Sua sugestão está relacionada a um problema? Comente.**
-Descreva de forma clara e detalhada qual é o problema que você está enfrentando.
+- **Seu problema ou necessidade:** <br>
+Descreva o problema no aplicativo que essa nova funcionalidade visa resolver.
 
-**Descreva uma solução, de acordo com o problema acima.**
-Uma descrição clara e concisa do que você quer que aconteça e como resolver.
+- **Descrição da Nova Funcionalidade:** <br>
+Descreva claramente qual é a nova funcionalidade que você está sugerindo.
 
-**Se for apenas uma ideia de implementação, descreva.**
-1. Descrição da Nova Funcionalidade:
-2. Explique como essa nova funcionalidade irá beneficiar o usuário:
-3. Comente como essa nova funcionalidade irá melhorar o desempenho do aplicativo:
+- **Benefícios para o Usuário:** <br>
+Explique como essa nova funcionalidade irá beneficiar os usuários do aplicativo.
 
-**Requisitos Técnicos (se aplicável)**
-Se houver requisitos técnicos específicos para implementar essa funcionalidade, como novas ferramentas, frameworks, designer etc...
+- **Melhoria de Desempenho do Aplicativo:** <br>
+Comente sobre como essa nova funcionalidade pode contribuir para melhorar o desempenho geral do aplicativo.
 
-**Capturas de Tela**
+- **Requisitos Técnicos (se aplicável):** <br>
+Se houver requisitos técnicos específicos para implementar essa funcionalidade, liste-os aqui.
+
+- **Capturas de Tela (se aplicável):** <br>
 Se você tiver algum design para ilustrar como a nova funcionalidade deveria ser visualizada ou funcionar, anexe essas imagens ou documentos.
 
-**Notas Adicionais**
-Inclua quaisquer outras informações relevantes que você ache necessário, use esse espaço para comentar o que você acha de importante.
+- **Notas Adicionais:** <br>
+Inclua quaisquer outras informações relevantes que você considere necessárias ou comentários adicionais sobre a sugestão.
+
