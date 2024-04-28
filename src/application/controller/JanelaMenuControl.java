@@ -68,6 +68,8 @@ public class JanelaMenuControl extends JFrame {
     private JTextField fieldTempo = new JTextField();
     private JButton cadastrarAparelho = new JButton("Cadastrar");
     private JTable tabelaAparelho = new JTable();
+    private JButton btnExcluirAparelho = new JButton("Excluir Aparelho");
+    private JButton btnCustoMensal = new JButton("Custo Mensal");
 
     public JTextField getFieldNomeAparelho() {
         return fieldNomeAparelho;
@@ -96,7 +98,12 @@ public class JanelaMenuControl extends JFrame {
     public JTable getTabelaAparelho() {
         return tabelaAparelho;
     }
-
+    public JButton getBtnExcluirAparelho() {
+        return btnExcluirAparelho;
+    }
+    public JButton getBtnCustoMensal() {
+        return btnCustoMensal;
+    }
 
     // MENU COMPANHIA
     // Botão de Companhia

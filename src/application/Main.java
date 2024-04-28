@@ -24,6 +24,7 @@ public class Main {
         new ConexaoBD().criarTabelaUsuario();
         new ConexaoBD().criarTabelaEndereco();
         new ConexaoBD().criarTabelaCompanhias();
+        new ConexaoBD().criarTabelaAparelho();
     }
 
 }

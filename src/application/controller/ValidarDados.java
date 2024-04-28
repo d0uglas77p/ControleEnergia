@@ -1,6 +1,7 @@
 package application.controller;
 
 import application.model.DAO.UsuarioDAO;
+import application.model.entity.Aparelho;
 import application.model.entity.Companhia;
 import application.model.entity.Endereco;
 import application.model.entity.Usuario;
@@ -64,4 +65,19 @@ public class ValidarDados {
             throw new IllegalArgumentException("Preencha todos os dados!") ; // Printa a falha
         }
     }
+
+    public static void validarAparelho(Aparelho aparelho) throws  IllegalArgumentException {
+        // Verifica se os campos obrigatórios estão vazios
+        if (aparelho.getNomeAparelho() == null || aparelho.getNomeAparelho().isEmpty() ||
+                aparelho.getNomeFabricante() == null || aparelho.getNomeFabricante().isEmpty() ||
+                aparelho.getMarca() == null || aparelho.getMarca().isEmpty() ||
+                aparelho.getModelo() == null || aparelho.getModelo().isEmpty() ||
+                aparelho.getVolts() == null || aparelho.getVolts().isEmpty() ||
+                aparelho.getWatts() == null || aparelho.getWatts().isEmpty() ||
+                aparelho.getTempo() == null || aparelho.getTempo().isEmpty() ||
+                aparelho.getKwh() == null || aparelho.getKwh().isEmpty()) {
+            throw new IllegalArgumentException("Preencha todos os dados!") ; // Printa a falha
+        }
+    }
+
 }

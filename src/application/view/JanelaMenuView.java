@@ -2,8 +2,10 @@ package application.view;
 
 import application.Main;
 import application.events.JanelaMenuEvents;
+import application.model.DAO.AparelhoDAO;
 import application.model.DAO.CompanhiaDAO;
 import application.model.DAO.EnderecoDAO;
+import application.model.entity.Aparelho;
 import application.model.entity.Companhia;
 import application.model.entity.Endereco;
 import application.model.entity.Usuario;
@@ -20,12 +22,12 @@ public class JanelaMenuView extends JanelaMenuEvents {
 
     private EnderecoDAO enderecoDAO;
     private CompanhiaDAO companhiaDAO;
-    //private AparelhoDAO aparelhoDAO;
+    private AparelhoDAO aparelhoDAO;
 
     public JanelaMenuView(Usuario usuario) throws SQLException {
         this.enderecoDAO = new EnderecoDAO();
         this.companhiaDAO = new CompanhiaDAO();
-        //this.aparelhoDAO = new AparelhoDAO();
+        this.aparelhoDAO = new AparelhoDAO();
 
         // Instanciando o frameMenu
         getFrameMenu().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -279,9 +281,9 @@ public class JanelaMenuView extends JanelaMenuEvents {
         getPanelAparelhos().add(getCadastrarAparelho());
 
         // lista de aparelhos cadastrados
-        // List<Aparelho> aparelhosUsuario = aparelhoDAO.buscarAparelhos(usuario.getId());
+        List<Aparelho> aparelhosUsuario = aparelhoDAO.buscarAparelhos(usuario.getId());
 
-        /*
+
         // Nome das colunas
         String[] headerAparelho = {"Aparelho", "Fabricante", "Marca", "Modelo", "Volts", "Watts", "Tempo", "Kwh"};
 
@@ -294,7 +296,7 @@ public class JanelaMenuView extends JanelaMenuEvents {
                 //String tarifaString = aparelho.getTarifa();
                 //double tarifaDouble = Double.parseDouble(tarifaString);
                 //DecimalFormat decimal = new DecimalFormat("#0.00");
-                // tarifaDecimal = decimal.format(tarifaDouble);
+                //tarifaDecimal = decimal.format(tarifaDouble);
                 dataAparelho[i] = new String[]{
                         aparelho.getNomeAparelho(),
                         aparelho.getNomeFabricante(),
@@ -318,10 +320,20 @@ public class JanelaMenuView extends JanelaMenuEvents {
         // Criar a tabela
         getPanelAparelhos().setVisible(false);
         JScrollPane scrollPaneAparelho = new JScrollPane(getTabelaAparelho());
-        scrollPaneAparelho.setBounds(25,400,630,100);
+        scrollPaneAparelho.setBounds(25,270,630,222);
         getPanelAparelhos().add(scrollPaneAparelho);
 
-         */
+        // Botão para excluir aparelho cadastrado
+        getBtnCustoMensal().setVisible(false);
+        getBtnCustoMensal().setBounds(50,510,115,28);
+        getBtnCustoMensal().setFont(new Font("Arial", Font.BOLD,12));
+        getPanelAparelhos().add(getBtnCustoMensal());
+
+        // Botão para excluir aparelho cadastrado
+        getBtnExcluirAparelho().setVisible(false);
+        getBtnExcluirAparelho().setBounds(490,510,135,28);
+        getBtnExcluirAparelho().setFont(new Font("Arial", Font.BOLD,12));
+        getPanelAparelhos().add(getBtnExcluirAparelho());
 
         // -------------------------------------------FIM APARELHOS------------------------------------------------- //
 

@@ -1,6 +1,7 @@
 package application.events;
 
 import application.controller.JanelaMenuControl;
+import application.model.DAO.AparelhoDAO;
 import application.model.DAO.CompanhiaDAO;
 import application.model.DAO.EnderecoDAO;
 import application.model.DAO.UsuarioDAO;
@@ -24,7 +25,7 @@ public class JanelaMenuEvents extends JanelaMenuControl {
     private UsuarioDAO usuarioDAO;
     private EnderecoDAO enderecoDAO;
     private CompanhiaDAO companhiaDAO;
-    //private AparelhoDAO aparelhoDAO;
+    private AparelhoDAO aparelhoDAO;
     private Companhia companhia;
 
     // Eventos dos objetos
@@ -32,7 +33,7 @@ public class JanelaMenuEvents extends JanelaMenuControl {
         this.usuarioDAO = new UsuarioDAO();
         this.enderecoDAO = new EnderecoDAO();
         this.companhiaDAO = new CompanhiaDAO();
-        //this.aparelhoDAO = new AparelhoDAO();
+        this.aparelhoDAO = new AparelhoDAO();
         this.companhia = new Companhia();
 
         getBtnSair().addActionListener(new ActionListener() {
@@ -108,6 +109,9 @@ public class JanelaMenuEvents extends JanelaMenuControl {
                 getFieldWatts().setVisible(true);
                 getFieldTempo().setVisible(true);
                 getCadastrarAparelho().setVisible(true);
+                getBtnExcluirAparelho().setVisible(true);
+                getBtnCustoMensal().setVisible(true);
+
 
             }
         });
