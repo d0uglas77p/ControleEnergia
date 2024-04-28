@@ -87,6 +87,30 @@ public class ConexaoBD {
             e.printStackTrace();
         }
     }
+
+    // método para criar a tabela de aparelhos no banco de dados
+    public void criarTabelaAparelho() {
+        try (Connection conn = conectar();
+             Statement statement = conn.createStatement()) {
+
+            String sql = "CREATE TABLE IF NOT EXISTS aparelhos (" +
+                    "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    "nomeAparelho TEXT NOT NULL," +
+                    "nomeFabribricante TEXT NOT NULL," +
+                    "marca TEXT NOT NULL," +
+                    "modelo TEXT NOT NULL," +
+                    "volts TEXT NOT NULL," +
+                    "watts TEXT NOT NULL," +
+                    "tempo TEXT NOT NULL," +
+                    "kwh TEXT NOT NULL," +
+                    "usuario_id INTEGER," +
+                    "FOREIGN KEY(usuario_id) REFERENCES usuario(id));";
+            statement.executeUpdate(sql);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
 
 

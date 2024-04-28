@@ -58,6 +58,53 @@ public class JanelaMenuControl extends JFrame {
         return panelAparelhos;
     }
 
+    // Fields para o cadastro de aparelho
+    private JTextField fieldNomeAparelho = new JTextField();
+    private JTextField fieldFabricante = new JTextField();
+    private JTextField fieldMarca = new JTextField();
+    private JTextField fieldModelo = new JTextField();
+    private JTextField fieldVolts = new JTextField();
+    private JTextField fieldWatts = new JTextField();
+    private JTextField fieldTempo = new JTextField();
+    private JButton cadastrarAparelho = new JButton("Cadastrar");
+    private JTable tabelaAparelho = new JTable();
+    private JButton btnExcluirAparelho = new JButton("Excluir Aparelho");
+    private JButton btnCustoMensal = new JButton("Custo Mensal");
+
+    public JTextField getFieldNomeAparelho() {
+        return fieldNomeAparelho;
+    }
+    public JTextField getFieldFabricante() {
+        return fieldFabricante;
+    }
+    public JTextField getFieldMarca() {
+        return fieldMarca;
+    }
+    public JTextField getFieldModelo() {
+        return fieldModelo;
+    }
+    public JTextField getFieldVolts() {
+        return fieldVolts;
+    }
+    public JTextField getFieldWatts() {
+        return fieldWatts;
+    }
+    public JTextField getFieldTempo() {
+        return fieldTempo;
+    }
+    public JButton getCadastrarAparelho() {
+        return cadastrarAparelho;
+    }
+    public JTable getTabelaAparelho() {
+        return tabelaAparelho;
+    }
+    public JButton getBtnExcluirAparelho() {
+        return btnExcluirAparelho;
+    }
+    public JButton getBtnCustoMensal() {
+        return btnCustoMensal;
+    }
+
     // MENU COMPANHIA
     // Botão de Companhia
     private JButton btnCompanhia = new JButton("Companhia");
