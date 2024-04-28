@@ -20,10 +20,12 @@ public class JanelaMenuView extends JanelaMenuEvents {
 
     private EnderecoDAO enderecoDAO;
     private CompanhiaDAO companhiaDAO;
+    //private AparelhoDAO aparelhoDAO;
 
     public JanelaMenuView(Usuario usuario) throws SQLException {
         this.enderecoDAO = new EnderecoDAO();
         this.companhiaDAO = new CompanhiaDAO();
+        //this.aparelhoDAO = new AparelhoDAO();
 
         // Instanciando o frameMenu
         getFrameMenu().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -176,12 +178,151 @@ public class JanelaMenuView extends JanelaMenuEvents {
         getPanelAparelhos().setBounds(280,0,705,562);
         getPanelAparelhos().setLayout(null);
         getFrameMenu().add(getPanelAparelhos());
-        //texto
-        JLabel txtAparelhos = new JLabel("APARELHOS");
-        txtAparelhos.setBounds(300,20,200,20);
-        txtAparelhos.setFont(new Font("Arial",Font.BOLD,18));
-        txtAparelhos.setForeground(Color.BLACK);
-        getPanelAparelhos().add(txtAparelhos);
+
+        // Labels da tela de aparelho
+        JLabel aparelhotxt = new JLabel("Nome do Aparelho");
+        aparelhotxt.setBounds(54,30,300,20);
+        aparelhotxt.setFont(new Font("Arial", Font.BOLD, 14));
+        aparelhotxt.setForeground(Color.BLACK);
+        getPanelAparelhos().add(aparelhotxt);
+
+        JLabel fabricantetxt = new JLabel("Nome do Fabricante");
+        fabricantetxt.setBounds(54,75,300,20);
+        fabricantetxt.setFont(new Font("Arial", Font.BOLD, 14));
+        fabricantetxt.setForeground(Color.BLACK);
+        getPanelAparelhos().add(fabricantetxt);
+
+        JLabel marcatxt = new JLabel("Marca");
+        marcatxt.setBounds(54,120,300,20);
+        marcatxt.setFont(new Font("Arial", Font.BOLD, 14));
+        marcatxt.setForeground(Color.BLACK);
+        getPanelAparelhos().add(marcatxt);
+
+        JLabel modelotxt = new JLabel("Modelo");
+        modelotxt.setBounds(54,165,300,20);
+        modelotxt.setFont(new Font("Arial", Font.BOLD, 14));
+        modelotxt.setForeground(Color.BLACK);
+        getPanelAparelhos().add(modelotxt);
+
+        // Fields da tela de aparelhos
+        getFieldNomeAparelho().setVisible(false);
+        getFieldNomeAparelho().setBounds(54,50,300,26);
+        getPanelAparelhos().add(getFieldNomeAparelho());
+
+        getFieldFabricante().setVisible(false);
+        getFieldFabricante().setBounds(54,95,300,26);
+        getPanelAparelhos().add(getFieldFabricante());
+
+        getFieldMarca().setVisible(false);
+        getFieldMarca().setBounds(54,140,300,26);
+        getPanelAparelhos().add(getFieldMarca());
+
+        getFieldModelo().setVisible(false);
+        getFieldModelo().setBounds(54,185,300,26);
+        getPanelAparelhos().add(getFieldModelo());
+
+        // Painel de especificações do aparelho
+        JPanel panelEspecificacao = new JPanel();
+        panelEspecificacao.setBorder(BorderFactory.createTitledBorder("ESPECIFICAÇÃO"));
+        panelEspecificacao.setBounds(36,10,336,225);
+        getPanelAparelhos().add(panelEspecificacao);
+
+        // Labels de potencia do aparelho
+        JLabel voltstxt = new JLabel("Volts");
+        voltstxt.setBounds(420,30,300,20);
+        voltstxt.setFont(new Font("Arial", Font.BOLD, 14));
+        voltstxt.setForeground(Color.BLACK);
+        getPanelAparelhos().add(voltstxt);
+
+        JLabel wattstxt = new JLabel("Watts");
+        wattstxt.setBounds(420,75,300,20);
+        wattstxt.setFont(new Font("Arial", Font.BOLD, 14));
+        wattstxt.setForeground(Color.BLACK);
+        getPanelAparelhos().add(wattstxt);
+
+        // Fields da tela de aparelhos
+        getFieldVolts().setVisible(false);
+        getFieldVolts().setBounds(420,50,200,26);
+        getPanelAparelhos().add(getFieldVolts());
+
+        getFieldWatts().setVisible(false);
+        getFieldWatts().setBounds(420,95,200,26);
+        getPanelAparelhos().add(getFieldWatts());
+
+        // Painel de potencia do aparelho
+        JPanel panelPotencia = new JPanel();
+        panelPotencia.setBorder(BorderFactory.createTitledBorder("POTÊNCIA"));
+        panelPotencia.setBounds(400,10,240,130);
+        getPanelAparelhos().add(panelPotencia);
+
+        // Labels do tempo gasto do aparelho
+        JLabel tempotxt = new JLabel("Tempo gasto por dia");
+        tempotxt.setBounds(420,160,300,20);
+        tempotxt.setFont(new Font("Arial", Font.BOLD, 14));
+        tempotxt.setForeground(Color.BLACK);
+        getPanelAparelhos().add(tempotxt);
+
+        // Fields da tela de aparelhos
+        getFieldTempo().setVisible(false);
+        getFieldTempo().setBounds(570,158,50,26);
+        getPanelAparelhos().add(getFieldTempo());
+
+        JPanel panelTempo = new JPanel();
+        panelTempo.setBorder(BorderFactory.createTitledBorder(""));
+        panelTempo.setBounds(402,149,238,48);
+        getPanelAparelhos().add(panelTempo);
+
+        // Botão de cadastro de aparelho
+        getCadastrarAparelho().setVisible(false);
+        getCadastrarAparelho().setBounds(474,205,90,26);
+        getCadastrarAparelho().setFont(new Font("Arial",Font.BOLD,12));
+        getPanelAparelhos().add(getCadastrarAparelho());
+
+        // lista de aparelhos cadastrados
+        // List<Aparelho> aparelhosUsuario = aparelhoDAO.buscarAparelhos(usuario.getId());
+
+        /*
+        // Nome das colunas
+        String[] headerAparelho = {"Aparelho", "Fabricante", "Marca", "Modelo", "Volts", "Watts", "Tempo", "Kwh"};
+
+        String[][] dataAparelho = new String[aparelhosUsuario.size()][headerAparelho.length];
+
+        if (!aparelhosUsuario.isEmpty()) {
+            for (int i = 0; i < aparelhosUsuario.size(); i++) {
+                Aparelho aparelho = aparelhosUsuario.get(i);
+                //String rs = "R$ ";
+                //String tarifaString = aparelho.getTarifa();
+                //double tarifaDouble = Double.parseDouble(tarifaString);
+                //DecimalFormat decimal = new DecimalFormat("#0.00");
+                // tarifaDecimal = decimal.format(tarifaDouble);
+                dataAparelho[i] = new String[]{
+                        aparelho.getNomeAparelho(),
+                        aparelho.getNomeFabricante(),
+                        aparelho.getMarca(),
+                        aparelho.getModelo(),
+                        aparelho.getVolts(),
+                        aparelho.getWatts(),
+                        aparelho.getTempo(),
+                        aparelho.getKwh(),
+                        //rs+tarifaDecimal,
+                };
+            }
+        } else {
+            dataAparelho = new String[0][headerAparelho.length];
+        }
+
+        // Modelo da tabela
+        DefaultTableModel modelAparelho = new DefaultTableModel(dataAparelho, headerAparelho);
+        getTabelaAparelho().setModel(modelAparelho);
+
+        // Criar a tabela
+        getPanelAparelhos().setVisible(false);
+        JScrollPane scrollPaneAparelho = new JScrollPane(getTabelaAparelho());
+        scrollPaneAparelho.setBounds(25,400,630,100);
+        getPanelAparelhos().add(scrollPaneAparelho);
+
+         */
+
         // -------------------------------------------FIM APARELHOS------------------------------------------------- //
 
 
@@ -294,11 +435,10 @@ public class JanelaMenuView extends JanelaMenuEvents {
         getFieldNumMedidor().setBounds(140,318,175,26);
         getPanelCompanhia().add(getFieldNumMedidor());
 
-
         // Painel de classificação da instalação de energia
         JPanel panelClassificacao = new JPanel();
-        panelClassificacao.setBorder(BorderFactory.createTitledBorder("CLASSIFICAÇÃO")); // Borda personalizada do painel
-        panelClassificacao.setBounds(20,175,309,200); // Posição e tamanho do painel
+        panelClassificacao.setBorder(BorderFactory.createTitledBorder("CLASSIFICAÇÃO"));
+        panelClassificacao.setBounds(20,175,309,200);
         getPanelCompanhia().add(panelClassificacao);
 
         // Labels da tarifa da companhia
