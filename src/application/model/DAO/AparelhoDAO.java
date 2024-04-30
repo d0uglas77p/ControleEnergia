@@ -14,13 +14,13 @@ import java.util.List;
 public class AparelhoDAO {
 
     // Método para inserir um novo aparelho no banco de dados
-    public boolean inserirNovaCompanhia(Aparelho aparelho, int usuarioId) {
+    public boolean inserirNovoAparelho(Aparelho aparelho, int usuarioId) {
 
         try {
             ValidarDados.validarAparelho(aparelho);
             try (Connection conn = new ConexaoBD().conectar();
                  PreparedStatement statement = conn.prepareStatement(
-                         "INSERT INTO aparelhos (nomeAparelho, nomeFabribricante, marca, modelo, volts, watts, tempo, kwh, usuario_id) VALUES (?,?,?,?,?,?,?,?,?)")) {
+                         "INSERT INTO aparelhos (nomeAparelho, nomeFabribricante, marca, modelo, volts, watts, tempo, usuario_id) VALUES (?,?,?,?,?,?,?,?)")) {
 
                 // Definindo os valores para os parâmetros do PreparedStatement
                 statement.setString(1, aparelho.getNomeAparelho());
@@ -30,8 +30,8 @@ public class AparelhoDAO {
                 statement.setString(5, aparelho.getVolts());
                 statement.setString(6, aparelho.getWatts());
                 statement.setString(7, aparelho.getTempo());
-                statement.setString(8, aparelho.getKwh());
-                statement.setInt(9, usuarioId);
+                //statement.setString(8, aparelho.getKwh());
+                statement.setInt(8, usuarioId);
 
                 // Executando a inserção no banco de dados
                 statement.executeUpdate();
@@ -66,7 +66,7 @@ public class AparelhoDAO {
                     aparelho.setVolts(resultSet.getString("volts"));
                     aparelho.setWatts(resultSet.getString("watts"));
                     aparelho.setTempo(resultSet.getString("tempo"));
-                    aparelho.setKwh(resultSet.getString("kwh"));
+                    //aparelho.setKwh(resultSet.getString("kwh"));
                     aparelhos.add(aparelho);
                 }
             }
@@ -76,23 +76,46 @@ public class AparelhoDAO {
         return aparelhos;
     }
 
-    // Método para excluir aparelho do banco por nomeAparelho
-    public boolean excluirAparelho(String aparelho, int usuarioId) {
+    // Método para excluir aparelho do banco pelo id do aparelho
+    public boolean excluirAparelhoId(int idAparelho, int idUsuario) {
         try (Connection conn = new ConexaoBD().conectar();
              PreparedStatement statement = conn.prepareStatement(
-                     "DELETE FROM aparelhos WHERE nomeAparelho=? AND usuario_id=?")) {
+                     "DELETE FROM aparelhos WHERE id=? AND usuario_id=?")) {
 
-            statement.setString(1, aparelho);
-            statement.setInt(2, usuarioId);
+            statement.setInt(1, idAparelho);
+            statement.setInt(2, idUsuario);
 
-            // Executando a exclusão no banco de dados
             int rowsAffected = statement.executeUpdate();
-
             return rowsAffected > 0; // Retorna true se pelo menos uma linha foi afetada (excluída)
 
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
-        return false;
     }
+
+    // Método para buscar o ID do aparelho pelo nome
+    public int buscarIdAparelhoPorNome(String nomeAparelho) {
+        String sql = "SELECT id FROM aparelhos WHERE nomeAparelho = ?";
+
+        try (Connection conn = new ConexaoBD().conectar();
+             PreparedStatement statement = conn.prepareStatement(sql)) {
+
+            statement.setString(1, nomeAparelho);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    // Retorna o ID do aparelho
+                    return resultSet.getInt("id");
+                } else {
+                    return -1;
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
 }

@@ -1,7 +1,6 @@
 package application.controller;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 
 /**
  * control --> events --> view
@@ -60,13 +59,13 @@ public class JanelaMenuControl extends JFrame {
 
     // Fields para o cadastro de aparelho
     private JTextField fieldNomeAparelho = new JTextField();
-    private JTextField fieldFabricante = new JTextField();
+    private JTextField fieldNomeFabricante = new JTextField();
     private JTextField fieldMarca = new JTextField();
     private JTextField fieldModelo = new JTextField();
     private JTextField fieldVolts = new JTextField();
     private JTextField fieldWatts = new JTextField();
     private JTextField fieldTempo = new JTextField();
-    private JButton cadastrarAparelho = new JButton("Cadastrar");
+    private JButton btnCadastrarAparelho = new JButton("Cadastrar");
     private JTable tabelaAparelho = new JTable();
     private JButton btnExcluirAparelho = new JButton("Excluir Aparelho");
     private JButton btnCustoMensal = new JButton("Custo Mensal");
@@ -74,8 +73,8 @@ public class JanelaMenuControl extends JFrame {
     public JTextField getFieldNomeAparelho() {
         return fieldNomeAparelho;
     }
-    public JTextField getFieldFabricante() {
-        return fieldFabricante;
+    public JTextField getFieldNomeFabricante() {
+        return fieldNomeFabricante;
     }
     public JTextField getFieldMarca() {
         return fieldMarca;
@@ -92,8 +91,8 @@ public class JanelaMenuControl extends JFrame {
     public JTextField getFieldTempo() {
         return fieldTempo;
     }
-    public JButton getCadastrarAparelho() {
-        return cadastrarAparelho;
+    public JButton getBtnCadastrarAparelho() {
+        return btnCadastrarAparelho;
     }
     public JTable getTabelaAparelho() {
         return tabelaAparelho;
