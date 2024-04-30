@@ -14,7 +14,7 @@ public class JanelaMenuControl extends JFrame {
     // Atributo dos objetos interáveis
 
     // Frame
-    private JFrame frameMenu = new JFrame("Controle de Energia - Menu");
+    private JFrame frameMenu = new JFrame("Controle de Energia - Início");
     public JFrame getFrameMenu() {
         return frameMenu;
     }
