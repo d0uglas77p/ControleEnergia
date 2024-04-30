@@ -51,6 +51,9 @@ public class JanelaMenuEvents extends JanelaMenuControl {
         getBtnInicio().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                // Definir o titulo da Janela de Menu
+                getFrameMenu().setTitle("Controle de Energia - Início");
+
                 //Vizualização dos paineis de menu
                 getPanelInicio().setVisible(true);
                 getPanelAparelhos().setVisible(false);
@@ -79,6 +82,9 @@ public class JanelaMenuEvents extends JanelaMenuControl {
         getBtnAparelhos().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                // Definir o titulo da Janela de Menu
+                getFrameMenu().setTitle("Controle de Energia - Aparelhos");
+
                 //Vizualização dos paineis de menu
                 getPanelInicio().setVisible(false);
                 getPanelAparelhos().setVisible(true);
@@ -206,6 +212,9 @@ public class JanelaMenuEvents extends JanelaMenuControl {
         getBtnCompanhia().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                // Definir o titulo da Janela de Menu
+                getFrameMenu().setTitle("Controle de Energia - Companhia");
+
                 //Vizualização dos paineis de menu
                 getPanelInicio().setVisible(false);
                 getPanelAparelhos().setVisible(false);
@@ -351,6 +360,9 @@ public class JanelaMenuEvents extends JanelaMenuControl {
         getBtnCadastro().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                // Definir o titulo da Janela de Menu
+                getFrameMenu().setTitle("Controle de Energia - Cadastro");
+
                 //Vizualização dos paineis de menu
                 getPanelInicio().setVisible(false);
                 getPanelAparelhos().setVisible(false);
@@ -532,6 +544,9 @@ public class JanelaMenuEvents extends JanelaMenuControl {
         getBtnAjuda().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                // Definir o titulo da Janela de Menu
+                getFrameMenu().setTitle("Controle de Energia - Ajuda");
+
                 //Vizualização dos paineis de menu
                 getPanelInicio().setVisible(false);
                 getPanelAparelhos().setVisible(false);
