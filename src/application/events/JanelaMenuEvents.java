@@ -155,7 +155,7 @@ public class JanelaMenuEvents extends JanelaMenuControl {
                                 JOptionPane.showMessageDialog(null, "Aparelho cadastrado com sucesso!", "SUCESSO", JOptionPane.INFORMATION_MESSAGE);
                                 atualizarListaAparelhos();
                             }  else {
-                                JOptionPane.showMessageDialog(null, "Falha ao cadastrar aparelho!\nVerifique se os campos estão vazios.", "ERRO", JOptionPane.ERROR_MESSAGE);
+                                JOptionPane.showMessageDialog(null, "Falha ao cadastrar aparelho!\nVerifique se contém algum campo vazio.", "ERRO", JOptionPane.ERROR_MESSAGE);
                             }
 
                         } catch (NumberFormatException exception) {
@@ -301,13 +301,12 @@ public class JanelaMenuEvents extends JanelaMenuControl {
                                 JOptionPane.showMessageDialog(null, "Companhia cadastrada com sucesso!", "SUCESSO", JOptionPane.INFORMATION_MESSAGE);
                                 atualizarListaCompanhias();
                             }  else {
-                                JOptionPane.showMessageDialog(null, "Falha ao cadastrar companhia!\nVerifique se os campos estão vazios \nou se já contém uma companhia com o mesmo CNPJ cadastrado.", "ERRO", JOptionPane.ERROR_MESSAGE);
+                                JOptionPane.showMessageDialog(null, "Falha ao cadastrar companhia!\nVerifique se contém algum campo vazio \nou se já contém uma companhia com o mesmo CNPJ cadastrado.", "ERRO", JOptionPane.ERROR_MESSAGE);
                             }
 
                         } catch (NumberFormatException exception) {
-                            JOptionPane.showMessageDialog(null, "Atenção, tarifa deverá ser um número!", "ERRO", JOptionPane.ERROR_MESSAGE);
+                            JOptionPane.showMessageDialog(null, "Atenção, tarifa tem que ser um número!", "ERRO", JOptionPane.ERROR_MESSAGE);
                             exception.printStackTrace();
-                            return;
                         }
                     }
                 });
