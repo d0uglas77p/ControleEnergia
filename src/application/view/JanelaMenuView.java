@@ -211,9 +211,9 @@ public class JanelaMenuView extends JanelaMenuEvents {
         getFieldNomeAparelho().setBounds(54,50,300,26);
         getPanelAparelhos().add(getFieldNomeAparelho());
 
-        getFieldFabricante().setVisible(false);
-        getFieldFabricante().setBounds(54,95,300,26);
-        getPanelAparelhos().add(getFieldFabricante());
+        getFieldNomeFabricante().setVisible(false);
+        getFieldNomeFabricante().setBounds(54,95,300,26);
+        getPanelAparelhos().add(getFieldNomeFabricante());
 
         getFieldMarca().setVisible(false);
         getFieldMarca().setBounds(54,140,300,26);
@@ -275,10 +275,10 @@ public class JanelaMenuView extends JanelaMenuEvents {
         getPanelAparelhos().add(panelTempo);
 
         // Botão de cadastro de aparelho
-        getCadastrarAparelho().setVisible(false);
-        getCadastrarAparelho().setBounds(474,205,90,26);
-        getCadastrarAparelho().setFont(new Font("Arial",Font.BOLD,12));
-        getPanelAparelhos().add(getCadastrarAparelho());
+        getBtnCadastrarAparelho().setVisible(false);
+        getBtnCadastrarAparelho().setBounds(474,205,90,26);
+        getBtnCadastrarAparelho().setFont(new Font("Arial",Font.BOLD,12));
+        getPanelAparelhos().add(getBtnCadastrarAparelho());
 
         // lista de aparelhos cadastrados
         List<Aparelho> aparelhosUsuario = aparelhoDAO.buscarAparelhos(usuario.getId());
@@ -292,21 +292,41 @@ public class JanelaMenuView extends JanelaMenuEvents {
         if (!aparelhosUsuario.isEmpty()) {
             for (int i = 0; i < aparelhosUsuario.size(); i++) {
                 Aparelho aparelho = aparelhosUsuario.get(i);
-                //String rs = "R$ ";
-                //String tarifaString = aparelho.getTarifa();
-                //double tarifaDouble = Double.parseDouble(tarifaString);
-                //DecimalFormat decimal = new DecimalFormat("#0.00");
-                //tarifaDecimal = decimal.format(tarifaDouble);
+
+                String v = "v";
+                String voltsString = aparelho.getVolts();
+
+                String w = "w";
+                String wattsString = aparelho.getWatts();
+
+                String h = "h";
+                String tempoString = aparelho.getTempo();
+                double tempoDouble = Double.parseDouble(tempoString);
+                DecimalFormat decimalConvertTempo = new DecimalFormat("0.00");
+                String tempoDecimal = decimalConvertTempo.format(tempoDouble);
+
+/*
+                String kwh = "kwh";
+                String kwhString = aparelho.getKwh();
+                double kwhDouble = Double.parseDouble(kwhString);
+                DecimalFormat decimalConvetKwh = new DecimalFormat("0.00");
+                String kwhDecimal = decimalConvetKwh.format(kwhDouble);
+ */
                 dataAparelho[i] = new String[]{
                         aparelho.getNomeAparelho(),
                         aparelho.getNomeFabricante(),
                         aparelho.getMarca(),
                         aparelho.getModelo(),
-                        aparelho.getVolts(),
-                        aparelho.getWatts(),
-                        aparelho.getTempo(),
+                        aparelho.getVolts()+v,
+                        aparelho.getWatts()+w,
+                        aparelho.getTempo()+h,
+                        /*
                         aparelho.getKwh(),
-                        //rs+tarifaDecimal,
+                        voltsString+v,
+                        wattsString+w,
+                        kwhDecimal+kwh,
+                        tempoDecimal+h,
+                         */
                 };
             }
         } else {
@@ -334,7 +354,6 @@ public class JanelaMenuView extends JanelaMenuEvents {
         getBtnExcluirAparelho().setBounds(490,510,135,28);
         getBtnExcluirAparelho().setFont(new Font("Arial", Font.BOLD,12));
         getPanelAparelhos().add(getBtnExcluirAparelho());
-
         // -------------------------------------------FIM APARELHOS------------------------------------------------- //
 
 

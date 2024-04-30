@@ -74,8 +74,8 @@ public class ValidarDados {
                 aparelho.getModelo() == null || aparelho.getModelo().isEmpty() ||
                 aparelho.getVolts() == null || aparelho.getVolts().isEmpty() ||
                 aparelho.getWatts() == null || aparelho.getWatts().isEmpty() ||
-                aparelho.getTempo() == null || aparelho.getTempo().isEmpty() ||
-                aparelho.getKwh() == null || aparelho.getKwh().isEmpty()) {
+                aparelho.getTempo() == null || aparelho.getTempo().isEmpty())
+                /*aparelho.getKwh() == null || aparelho.getKwh().isEmpty())*/ {
             throw new IllegalArgumentException("Preencha todos os dados!") ; // Printa a falha
         }
     }

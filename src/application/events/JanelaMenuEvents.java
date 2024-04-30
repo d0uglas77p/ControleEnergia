@@ -5,6 +5,7 @@ import application.model.DAO.AparelhoDAO;
 import application.model.DAO.CompanhiaDAO;
 import application.model.DAO.EnderecoDAO;
 import application.model.DAO.UsuarioDAO;
+import application.model.entity.Aparelho;
 import application.model.entity.Companhia;
 import application.model.entity.Endereco;
 import application.model.entity.Usuario;
@@ -102,17 +103,102 @@ public class JanelaMenuEvents extends JanelaMenuControl {
 
                 //Vizualização dos campos de aparelhos
                 getFieldNomeAparelho().setVisible(true);
-                getFieldFabricante().setVisible(true);
+                getFieldNomeFabricante().setVisible(true);
                 getFieldMarca().setVisible(true);
                 getFieldModelo().setVisible(true);
                 getFieldVolts().setVisible(true);
                 getFieldWatts().setVisible(true);
                 getFieldTempo().setVisible(true);
-                getCadastrarAparelho().setVisible(true);
+                getBtnCadastrarAparelho().setVisible(true);
                 getBtnExcluirAparelho().setVisible(true);
                 getBtnCustoMensal().setVisible(true);
 
+                // Método responsável para cadastrar novos aparelhos
+                getBtnCadastrarAparelho().addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        // Obter usuário logado
+                        String usuarioLogado = getLogado().getText();
+                        // Obter usuário logado no banco de dados
+                        Usuario usuarioAtual = usuarioDAO.buscarUsuario(usuarioLogado);
 
+                        Aparelho aparelho = new Aparelho();
+                        aparelho.setNomeAparelho(getFieldNomeAparelho().getText());
+                        aparelho.setNomeFabricante(getFieldNomeFabricante().getText());
+                        aparelho.setMarca(getFieldMarca().getText());
+                        aparelho.setModelo(getFieldModelo().getText());
+                        aparelho.setVolts(getFieldVolts().getText());
+                        aparelho.setWatts(getFieldWatts().getText());
+                        aparelho.setTempo(getFieldTempo().getText());
+                        //aparelho.setKwh(.getText());
+
+                        // Verifica se volts, watts e tempo são numericos
+                        try {
+                            double volts = Double.parseDouble(getFieldVolts().getText());
+                            aparelho.setVolts(String.valueOf(volts));
+
+                            double watts = Double.parseDouble(getFieldWatts().getText());
+                            aparelho.setWatts(String.valueOf(watts));
+
+                            double tempo = Double.parseDouble(getFieldTempo().getText());
+                            aparelho.setTempo(String.valueOf(tempo));
+
+                            if (new AparelhoDAO().inserirNovoAparelho(aparelho, usuarioAtual.getId())) {
+                                // Limpa os campos de dados que estavam preenchidos
+                                getFieldNomeAparelho().setText("");
+                                getFieldNomeFabricante().setText("");
+                                getFieldMarca().setText("");
+                                getFieldModelo().setText("");
+                                getFieldVolts().setText("");
+                                getFieldWatts().setText("");
+                                getFieldTempo().setText("");
+                                JOptionPane.showMessageDialog(null, "Aparelho cadastrado com sucesso!", "SUCESSO", JOptionPane.INFORMATION_MESSAGE);
+                                atualizarListaAparelhos();
+                            }  else {
+                                JOptionPane.showMessageDialog(null, "Falha ao cadastrar aparelho!\nVerifique se os campos estão vazios.", "ERRO", JOptionPane.ERROR_MESSAGE);
+                            }
+
+                        } catch (NumberFormatException exception) {
+                            JOptionPane.showMessageDialog(null, "Atenção! Volts, Watts e o Tempo deverão ser númericos!", "ERRO", JOptionPane.ERROR_MESSAGE);
+                            exception.printStackTrace();
+                        }
+                    }
+                });
+
+                // ActionListener para o botão de exclusão
+                getBtnExcluirAparelho().addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        int selecionaLinha = getTabelaAparelho().getSelectedRow();
+
+                        if (selecionaLinha != -1) {
+                            // Obtém o ID do aparelho no banco de dados
+                            int idAparelho = buscarIdAparelhoNaLinha(selecionaLinha);
+
+                            if (idAparelho != -1) {
+                                // usuário logado
+                                String usuarioLogado = getLogado().getText();
+                                Usuario usuarioAtual = usuarioDAO.buscarUsuario(usuarioLogado);
+
+                                // Confirmação
+                                int resposta = JOptionPane.showConfirmDialog(null, "Aparelho será apagado, tem certeza que deseja excluir?", "EXCLUIR APARELHO", JOptionPane.OK_CANCEL_OPTION);
+                                if (resposta == JOptionPane.OK_OPTION) {
+                                    // Exclui o aparelho pelo ID
+                                    if (aparelhoDAO.excluirAparelhoId(idAparelho, usuarioAtual.getId())) {
+                                        atualizarListaAparelhos();
+                                        JOptionPane.showMessageDialog(null, "Aparelho excluído com sucesso!", "SUCESSO", JOptionPane.INFORMATION_MESSAGE);
+                                    } else {
+                                        JOptionPane.showMessageDialog(null, "Falha ao excluir aparelho.", "ERRO", JOptionPane.ERROR_MESSAGE);
+                                    }
+                                }
+                            } else {
+                                JOptionPane.showMessageDialog(null, "Falha ao buscar o ID do aparelho.", "ERRO", JOptionPane.ERROR_MESSAGE);
+                            }
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Selecione um aparelho para excluir.", "AVISO", JOptionPane.WARNING_MESSAGE);
+                        }
+                    }
+                });
             }
         });
 
@@ -472,6 +558,80 @@ public class JanelaMenuEvents extends JanelaMenuControl {
         });
     }
 
+    //-----------------METODOS APARELHOS-----------------//
+
+    // Método para atualizar a lista de aparelhos
+    public void atualizarListaAparelhos() {
+        String usuarioLogado = getLogado().getText();
+        Usuario usuarioAtual = usuarioDAO.buscarUsuario(usuarioLogado);
+        List<Aparelho> aparelhos  = aparelhoDAO.buscarAparelhos(usuarioAtual.getId());
+        atualizarTabelaAparelhos(aparelhos); // Pega a atualização da tabela para atualizar a lista de companhia
+    }
+
+    // Método para atualizar a tabela de companhia vizual
+    private void atualizarTabelaAparelhos(List<Aparelho> aparelhos) {
+        DefaultTableModel modelAp = (DefaultTableModel) getTabelaAparelho().getModel();
+        modelAp.setRowCount(0);
+        for (Aparelho aparelho : aparelhos) {
+
+            String v = "v";
+            String voltsString = aparelho.getVolts();
+
+            String w = "w";
+            String wattsString = aparelho.getWatts();
+
+            String h = "h";
+            String tempoString = aparelho.getTempo();
+            double tempoDouble = Double.parseDouble(tempoString);
+            DecimalFormat decimalConvertTempo = new DecimalFormat("0.00");
+            String tempoDecimal = decimalConvertTempo.format(tempoDouble);
+
+            /*
+            String kwh = "kwh";
+            String kwhString = aparelho.getKwh();
+            double kwhDouble = Double.parseDouble(kwhString);
+            DecimalFormat decimalConvetKwh = new DecimalFormat("0.00");
+            String kwhDecimal = decimalConvetKwh.format(kwhDouble);
+             */
+
+            Object[] row = {
+                    aparelho.getNomeAparelho(),
+                    aparelho.getNomeFabricante(),
+                    aparelho.getMarca(),
+                    aparelho.getModelo(),
+                    aparelho.getVolts()+v,
+                    aparelho.getWatts()+w,
+                    aparelho.getTempo()+h,
+                    /*
+                    aparelho.getKwh(),
+                    voltsString+v,
+                    wattsString+w,
+                    kwhDecimal+kwh,
+                    tempoDecimal+h,
+                     */
+            };
+            modelAp.addRow(row);
+        }
+    }
+
+    // Método para buscar o ID do aparelho no banco selecionado na linha da tabela
+    private int buscarIdAparelhoNaLinha(int linha) {
+        try {
+            // Obtém o nome do aparelho da linha selecionada na tabela
+            String nomeAparelho = (String) getTabelaAparelho().getValueAt(linha, 0);
+
+            // Realiza a busca no banco de dados pelo ID do aparelho com base no nome
+            int idAparelho = aparelhoDAO.buscarIdAparelhoPorNome(nomeAparelho);
+            return idAparelho;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
+    //-----------------METODOS COMPANHIAS-----------------//
+
     // Método para atualizar a lista de companhia
     public void atualizarListaCompanhias() {
         String usuarioLogado = getLogado().getText();
@@ -482,8 +642,8 @@ public class JanelaMenuEvents extends JanelaMenuControl {
 
     // Método para atualizar a tabela de companhia vizual
     private void atualizarTabelaCompanhias(List<Companhia> companhias) {
-        DefaultTableModel model = (DefaultTableModel) getTabelaCompanhia().getModel();
-        model.setRowCount(0);
+        DefaultTableModel modelComp = (DefaultTableModel) getTabelaCompanhia().getModel();
+        modelComp.setRowCount(0);
         for (Companhia companhia : companhias) {
             String rs = "R$ ";
             String tarifaString = companhia.getTarifa();
@@ -498,7 +658,8 @@ public class JanelaMenuEvents extends JanelaMenuControl {
                     companhia.getMedidor(),
                     rs+tarifaDecimal,
             };
-            model.addRow(row);
+            modelComp.addRow(row);
         }
     }
+
 }

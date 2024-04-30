@@ -11,7 +11,7 @@ public class Aparelho {
     private String volts;
     private String watts;
     private String tempo;
-    private String kwh;
+    //private String kwh;
 
     public Aparelho() {
     }
@@ -69,10 +69,13 @@ public class Aparelho {
     public void setTempo(String tempo) {
         this.tempo = tempo;
     }
+    /*
     public String getKwh() {
         return kwh;
     }
     public void setKwh(String kwh) {
         this.kwh = kwh;
     }
+
+     */
 }
