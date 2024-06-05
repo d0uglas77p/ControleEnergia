@@ -1,15 +1,15 @@
-package application.controller;
+package application.service;
 
 import javax.swing.*;
 
 /**
- * control --> events --> view
+ * service --> events --> view
  * view = vizualização
  * events = eventos/ações dos objetos
- * control  = classe para criação dos objetos interáveis
+ * service  = classe para criação dos objetos interáveis
  * model = requisições
  **/
-public class JanelaLoginControl extends JFrame {
+public class JanelaLoginService extends JFrame {
 
     // Atributo dos objetos interáveiss
     private JLabel txtUsuario = new JLabel("Usuário");

@@ -1,6 +1,6 @@
 package application.model.DAO;
 
-import application.controller.ValidarDados;
+import application.service.ValidarDados;
 import application.model.conexao.ConexaoBD;
 import application.model.entity.Usuario;
 

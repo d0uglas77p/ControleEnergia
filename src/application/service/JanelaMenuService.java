@@ -1,16 +1,16 @@
-package application.controller;
+package application.service;
 
 import javax.swing.*;
 
 /**
- * control --> events --> view
+ * service --> events --> view
  * view = vizualização
  * events = eventos/ações dos objetos
- * control = classe para criação dos objetos interáveis
+ * service = classe para criação dos objetos interáveis
  * model = requisições
  **/
 
-public class JanelaMenuControl extends JFrame {
+public class JanelaMenuService extends JFrame {
     // Atributo dos objetos interáveis
 
     // Frame

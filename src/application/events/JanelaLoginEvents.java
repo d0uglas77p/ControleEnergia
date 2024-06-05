@@ -1,6 +1,6 @@
 package application.events;
 
-import application.controller.JanelaLoginControl;
+import application.service.JanelaLoginService;
 import application.model.DAO.UsuarioDAO;
 import application.model.entity.Usuario;
 import application.view.JanelaCadastroView;
@@ -11,7 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 
-public class JanelaLoginEvents extends JanelaLoginControl {
+public class JanelaLoginEvents extends JanelaLoginService {
 
     public JanelaLoginEvents() {
         // Eventos dos objetos

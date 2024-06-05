@@ -1,6 +1,6 @@
 package application.events;
 
-import application.controller.JanelaMenuControl;
+import application.service.JanelaMenuService;
 import application.model.DAO.AparelhoDAO;
 import application.model.DAO.CompanhiaDAO;
 import application.model.DAO.EnderecoDAO;
@@ -21,7 +21,7 @@ import java.text.DecimalFormat;
 import java.util.List;
 
 // Classe responsável para ações dos objetos interáveis
-public class JanelaMenuEvents extends JanelaMenuControl {
+public class JanelaMenuEvents extends JanelaMenuService {
 
     private UsuarioDAO usuarioDAO;
     private EnderecoDAO enderecoDAO;

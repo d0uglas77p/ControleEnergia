@@ -1,4 +1,4 @@
-package application.controller;
+package application.service;
 
 import application.model.DAO.UsuarioDAO;
 import application.model.entity.Aparelho;
