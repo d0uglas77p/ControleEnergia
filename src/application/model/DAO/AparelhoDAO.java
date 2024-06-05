@@ -20,7 +20,7 @@ public class AparelhoDAO {
             ValidarDados.validarAparelho(aparelho);
             try (Connection conn = new ConexaoBD().conectar();
                  PreparedStatement statement = conn.prepareStatement(
-                         "INSERT INTO aparelhos (nomeAparelho, nomeFabribricante, marca, modelo, volts, watts, tempo, usuario_id) VALUES (?,?,?,?,?,?,?,?)")) {
+                         "INSERT INTO aparelhos (nomeAparelho, nomeFabribricante, marca, modelo, volts, watts, tempo, kwh, usuario_id) VALUES (?,?,?,?,?,?,?,?,?)")) {
 
                 // Definindo os valores para os parâmetros do PreparedStatement
                 statement.setString(1, aparelho.getNomeAparelho());
@@ -30,8 +30,8 @@ public class AparelhoDAO {
                 statement.setString(5, aparelho.getVolts());
                 statement.setString(6, aparelho.getWatts());
                 statement.setString(7, aparelho.getTempo());
-                //statement.setString(8, aparelho.getKwh());
-                statement.setInt(8, usuarioId);
+                statement.setString(8, aparelho.getKwh());
+                statement.setInt(9, usuarioId);
 
                 // Executando a inserção no banco de dados
                 statement.executeUpdate();
@@ -66,7 +66,7 @@ public class AparelhoDAO {
                     aparelho.setVolts(resultSet.getString("volts"));
                     aparelho.setWatts(resultSet.getString("watts"));
                     aparelho.setTempo(resultSet.getString("tempo"));
-                    //aparelho.setKwh(resultSet.getString("kwh"));
+                    aparelho.setKwh(resultSet.getString("kwh"));
                     aparelhos.add(aparelho);
                 }
             }

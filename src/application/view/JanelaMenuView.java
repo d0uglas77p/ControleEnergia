@@ -305,13 +305,11 @@ public class JanelaMenuView extends JanelaMenuEvents {
                 DecimalFormat decimalConvertTempo = new DecimalFormat("0.00");
                 String tempoDecimal = decimalConvertTempo.format(tempoDouble);
 
-/*
-                String kwh = "kwh";
                 String kwhString = aparelho.getKwh();
                 double kwhDouble = Double.parseDouble(kwhString);
                 DecimalFormat decimalConvetKwh = new DecimalFormat("0.00");
                 String kwhDecimal = decimalConvetKwh.format(kwhDouble);
- */
+
                 dataAparelho[i] = new String[]{
                         aparelho.getNomeAparelho(),
                         aparelho.getNomeFabricante(),
@@ -320,13 +318,7 @@ public class JanelaMenuView extends JanelaMenuEvents {
                         aparelho.getVolts()+v,
                         aparelho.getWatts()+w,
                         aparelho.getTempo()+h,
-                        /*
-                        aparelho.getKwh(),
-                        voltsString+v,
-                        wattsString+w,
-                        kwhDecimal+kwh,
-                        tempoDecimal+h,
-                         */
+                        aparelho.getKwh()
                 };
             }
         } else {
