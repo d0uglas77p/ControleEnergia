@@ -1,6 +1,6 @@
 package application.events;
 
-import application.controller.JanelaCadastroControl;
+import application.service.JanelaCadastroService;
 import application.model.DAO.UsuarioDAO;
 import application.model.entity.Usuario;
 import application.view.JanelaLoginView;
@@ -9,7 +9,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class JanelaCadastroEvents extends JanelaCadastroControl {
+public class JanelaCadastroEvents extends JanelaCadastroService {
 
     // Eventos dos objetos
     public JanelaCadastroEvents() {

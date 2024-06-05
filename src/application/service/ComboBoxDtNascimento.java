@@ -1,4 +1,4 @@
-package application.controller;
+package application.service;
 
 import javax.swing.*;
 
