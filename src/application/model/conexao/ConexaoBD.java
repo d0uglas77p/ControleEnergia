@@ -102,6 +102,7 @@ public class ConexaoBD {
                     "volts TEXT NOT NULL," +
                     "watts TEXT NOT NULL," +
                     "tempo TEXT NOT NULL," +
+                    "kwh TEXT NOT NULL," +
                     "usuario_id INTEGER," +
                     "FOREIGN KEY(usuario_id) REFERENCES usuario(id));";
             statement.executeUpdate(sql);

@@ -136,9 +136,8 @@ public class JanelaMenuEvents extends JanelaMenuService {
                         aparelho.setVolts(getFieldVolts().getText());
                         aparelho.setWatts(getFieldWatts().getText());
                         aparelho.setTempo(getFieldTempo().getText());
-                        //aparelho.setKwh(.getText());
 
-                        // Verifica se volts, watts e tempo são numericos
+                        // Verifica se volts, watts e tempo são numéricos
                         try {
                             double volts = Double.parseDouble(getFieldVolts().getText());
                             aparelho.setVolts(String.valueOf(volts));
@@ -148,6 +147,10 @@ public class JanelaMenuEvents extends JanelaMenuService {
 
                             double tempo = Double.parseDouble(getFieldTempo().getText());
                             aparelho.setTempo(String.valueOf(tempo));
+
+                            // Calcular kWh
+                            double kwh = (watts * tempo) / 1000;
+                            aparelho.setKwh(String.valueOf(kwh));
 
                             if (new AparelhoDAO().inserirNovoAparelho(aparelho, usuarioAtual.getId())) {
                                 // Limpa os campos de dados que estavam preenchidos
@@ -600,13 +603,10 @@ public class JanelaMenuEvents extends JanelaMenuService {
             DecimalFormat decimalConvertTempo = new DecimalFormat("0.00");
             String tempoDecimal = decimalConvertTempo.format(tempoDouble);
 
-            /*
-            String kwh = "kwh";
             String kwhString = aparelho.getKwh();
             double kwhDouble = Double.parseDouble(kwhString);
             DecimalFormat decimalConvetKwh = new DecimalFormat("0.00");
             String kwhDecimal = decimalConvetKwh.format(kwhDouble);
-             */
 
             Object[] row = {
                     aparelho.getNomeAparelho(),
@@ -616,13 +616,7 @@ public class JanelaMenuEvents extends JanelaMenuService {
                     aparelho.getVolts()+v,
                     aparelho.getWatts()+w,
                     aparelho.getTempo()+h,
-                    /*
-                    aparelho.getKwh(),
-                    voltsString+v,
-                    wattsString+w,
-                    kwhDecimal+kwh,
-                    tempoDecimal+h,
-                     */
+                    aparelho.getKwh()
             };
             modelAp.addRow(row);
         }
