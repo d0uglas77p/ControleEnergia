@@ -326,7 +326,13 @@ public class JanelaMenuView extends JanelaMenuEvents {
         }
 
         // Modelo da tabela
-        DefaultTableModel modelAparelho = new DefaultTableModel(dataAparelho, headerAparelho);
+        DefaultTableModel modelAparelho = new DefaultTableModel(dataAparelho, headerAparelho) {
+            // Evita que a tabela seja editada
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
         getTabelaAparelho().setModel(modelAparelho);
 
         // Criar a tabela
@@ -520,9 +526,9 @@ public class JanelaMenuView extends JanelaMenuEvents {
         List<Companhia> companhiasUsuario = companhiaDAO.buscarCompanhias(usuario.getId());
 
         // Nome das colunas
-        String[] header = {"Nome", "CNPJ", "Telefone", "Fornecimento", "Medidor", "Tarifa"};
+        String[] headerCompanhia = {"Nome", "CNPJ", "Telefone", "Fornecimento", "Medidor", "Tarifa"};
 
-        String[][] data = new String[companhiasUsuario.size()][header.length];
+        String[][] dataCompanhia = new String[companhiasUsuario.size()][headerCompanhia.length];
 
             if (!companhiasUsuario.isEmpty()) {
                 for (int i = 0; i < companhiasUsuario.size(); i++) {
@@ -532,7 +538,7 @@ public class JanelaMenuView extends JanelaMenuEvents {
                     double tarifaDouble = Double.parseDouble(tarifaString);
                     DecimalFormat decimal = new DecimalFormat("#0.00");
                     String tarifaDecimal = decimal.format(tarifaDouble);
-                    data[i] = new String[]{
+                    dataCompanhia[i] = new String[]{
                             companhia.getNomeCompanhia(),
                             companhia.getCnpj(),
                             companhia.getTelefoneCompanhia(),
@@ -542,12 +548,18 @@ public class JanelaMenuView extends JanelaMenuEvents {
                     };
                 }
             } else {
-                data = new String[0][header.length];
+                dataCompanhia = new String[0][headerCompanhia.length];
             }
 
         // Modelo da tabela
-        DefaultTableModel model = new DefaultTableModel(data, header);
-        getTabelaCompanhia().setModel(model);
+        DefaultTableModel modelCompanhia = new DefaultTableModel(dataCompanhia, headerCompanhia) {
+            // Evita que a tabela seja editada
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        getTabelaCompanhia().setModel(modelCompanhia);
 
         // Criar a tabela
         getPanelCompanhia().setVisible(false);
