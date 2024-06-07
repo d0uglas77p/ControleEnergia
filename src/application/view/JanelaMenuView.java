@@ -285,7 +285,7 @@ public class JanelaMenuView extends JanelaMenuEvents {
 
 
         // Nome das colunas
-        String[] headerAparelho = {"Aparelho", "Fabricante", "Marca", "Modelo", "Volts", "Watts", "Tempo", "Kwh"};
+        String[] headerAparelho = {"Aparelho", "Fabricante", "Marca", "Modelo", "Volts", "Watts", "Tempo", "kWh"};
 
         String[][] dataAparelho = new String[aparelhosUsuario.size()][headerAparelho.length];
 
@@ -465,15 +465,15 @@ public class JanelaMenuView extends JanelaMenuEvents {
         getPanelCompanhia().add(panelClassificacao);
 
         // Labels da tarifa da companhia
-        JLabel tarifaTxt = new JLabel("Tarifa de Energia R$");
-        tarifaTxt.setBounds(390,54,300,20);
+        JLabel tarifaTxt = new JLabel("Tarifa de Energia por kWh: R$");
+        tarifaTxt.setBounds(370,54,300,20);
         tarifaTxt.setFont(new Font("Arial", Font.BOLD, 14));
         tarifaTxt.setForeground(Color.BLACK);
         getPanelCompanhia().add(tarifaTxt);
 
         // Field da tarifa da companhia
         getFieldTarifa().setVisible(false);
-        getFieldTarifa().setBounds(534,50,62,26);
+        getFieldTarifa().setBounds(580,50,62,26);
         getPanelCompanhia().add(getFieldTarifa());
 
         // Menssagem de atenção da tarifa da companhia

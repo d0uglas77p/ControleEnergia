@@ -9,6 +9,7 @@ import application.model.entity.Aparelho;
 import application.model.entity.Companhia;
 import application.model.entity.Endereco;
 import application.model.entity.Usuario;
+import application.view.JanelaCustoMensalView;
 import application.view.JanelaLoginView;
 
 
@@ -206,6 +207,73 @@ public class JanelaMenuEvents extends JanelaMenuService {
                         } else {
                             JOptionPane.showMessageDialog(null, "Selecione um aparelho para excluir.", "AVISO", JOptionPane.WARNING_MESSAGE);
                         }
+                    }
+                });
+
+                // ActionListener para o botão de Custo Mensal dos Aparelhos
+                getBtnCustoMensal().addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        // Obter usuário logado
+                        String usuarioLogado = getLogado().getText();
+                        Usuario usuarioAtual = usuarioDAO.buscarUsuario(usuarioLogado);
+
+                        // Verificar se existe uma companhia cadastrada
+                        List<Companhia> companhias = companhiaDAO.buscarCompanhias(usuarioAtual.getId());
+                        if (companhias.isEmpty()) {
+                            JOptionPane.showMessageDialog(null, "Nenhuma companhia cadastrada. Por favor, cadastre uma companhia antes de calcular o custo mensal.", "ERRO", JOptionPane.ERROR_MESSAGE);
+                            return;
+                        }
+
+                        // Criar um JComboBox para selecionar a companhia
+                        JComboBox<String> comboBoxCompanhias = new JComboBox<>();
+                        for (Companhia companhia : companhias) {
+                            comboBoxCompanhias.addItem(companhia.getNomeCompanhia());
+                        }
+
+                        // Mostrar um diálogo para selecionar a companhia
+                        int option = JOptionPane.showConfirmDialog(null, comboBoxCompanhias, "Selecione a Companhia", JOptionPane.OK_CANCEL_OPTION);
+                        if (option != JOptionPane.OK_OPTION) {
+                            return; // Usuário cancelou a seleção
+                        }
+
+                        // Obter a companhia selecionada no JComboBox
+                        String companhiaSelecionadaNome = (String) comboBoxCompanhias.getSelectedItem();
+                        Companhia companhiaSelecionada = null;
+                        for (Companhia companhia : companhias) {
+                            if (companhia.getNomeCompanhia().equals(companhiaSelecionadaNome)) {
+                                companhiaSelecionada = companhia;
+                                break;
+                            }
+                        }
+
+                        if (companhiaSelecionada == null) {
+                            JOptionPane.showMessageDialog(null, "Companhia selecionada não encontrada. Por favor, selecione uma companhia válida.", "ERRO", JOptionPane.ERROR_MESSAGE);
+                            return;
+                        }
+
+                        double tarifa = Double.parseDouble(companhiaSelecionada.getTarifa());
+
+                        // Buscar aparelhos do usuário
+                        List<Aparelho> aparelhos = aparelhoDAO.buscarAparelhos(usuarioAtual.getId());
+                        if (aparelhos.isEmpty()) {
+                            JOptionPane.showMessageDialog(null, "Nenhum aparelho cadastrado. Por favor, cadastre aparelhos antes de calcular o custo mensal.", "ERRO", JOptionPane.ERROR_MESSAGE);
+                            return;
+                        }
+
+                        // Calcular o custo mensal
+                        double custoMensalTotal = 0;
+                        for (Aparelho aparelho : aparelhos) {
+                            double watts = Double.parseDouble(aparelho.getWatts());
+                            double horas = Double.parseDouble(aparelho.getTempo());
+                            double kwh = (watts * horas) / 1000;
+                            double custoMensal = kwh * tarifa * 30;
+                            custoMensalTotal += custoMensal;
+                        }
+
+                        // Abrir nova janela para mostrar o custo mensal
+                        JanelaCustoMensalView custoMensalView = new JanelaCustoMensalView(custoMensalTotal);
+                        custoMensalView.setVisible(true);
                     }
                 });
             }
