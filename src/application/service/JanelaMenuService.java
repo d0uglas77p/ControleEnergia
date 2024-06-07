@@ -69,6 +69,7 @@ public class JanelaMenuService extends JFrame {
     private JTable tabelaAparelho = new JTable();
     private JButton btnExcluirAparelho = new JButton("Excluir Aparelho");
     private JButton btnCustoMensal = new JButton("Custo Mensal");
+    private JComboBox<String> comboBoxCompanhias = new JComboBox<>();
 
     public JTextField getFieldNomeAparelho() {
         return fieldNomeAparelho;
@@ -102,6 +103,9 @@ public class JanelaMenuService extends JFrame {
     }
     public JButton getBtnCustoMensal() {
         return btnCustoMensal;
+    }
+    public JComboBox<String> getComboBoxCompanhias() {
+        return comboBoxCompanhias;
     }
 
     // MENU COMPANHIA
