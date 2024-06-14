@@ -900,12 +900,98 @@ public class JanelaMenuView extends JanelaMenuEvents {
         getPanelAjuda().setBounds(280,0,705,562);
         getPanelAjuda().setLayout(null);
         getFrameMenu().add(getPanelAjuda());
-        //texto
-        JLabel txtAjuda = new JLabel("AJUDA");
-        txtAjuda.setBounds(300,20,200,20);
-        txtAjuda.setFont(new Font("Arial",Font.BOLD,18));
-        txtAjuda.setForeground(Color.BLACK);
-        getPanelAjuda().add(txtAjuda);
+
+        // Icones das opções de menu
+        ImageIcon iconPersonagem = new ImageIcon(Main.class.getResource("/application/view/icons/personagem.png"));
+        getIconPersonagem().setIcon(iconPersonagem);
+        getIconPersonagem().setBounds(5,140,241,400);
+        getIconPersonagem().setVisible(true);
+        getPanelAjuda().add(getIconPersonagem());
+
+        ImageIcon iconChat = new ImageIcon(Main.class.getResource("/application/view/icons/chat.png"));
+        getIconChat().setIcon(iconChat);
+        getIconChat().setBounds(140,-140,512,512);
+        getIconChat().setVisible(true);
+        getPanelAjuda().add(getIconChat());
+
+        ImageIcon iconGithub = new ImageIcon(Main.class.getResource("/application/view/icons/github.png"));
+        getIconGithub().setIcon(iconGithub);
+        getIconGithub().setBounds(640,513,25,25);
+        getIconGithub().setVisible(true);
+        getPanelAjuda().add(getIconGithub());
+
+        // - TEXTOS DO PAINEL DE DETALHES -
+        JLabel txtCalculoKwhTitulo = new JLabel("Calculo do Consumo em kWh:");
+        txtCalculoKwhTitulo.setBounds(375,38,200,10);
+        txtCalculoKwhTitulo.setFont(new Font("Arial",Font.BOLD,12));
+        txtCalculoKwhTitulo.setForeground(Color.BLUE);
+        getPanelAjuda().add(txtCalculoKwhTitulo);
+
+        String txtCalculoInfo = "<html>- O consumo de energia é calculado em kilowatt-hora (kWh).<br>" +
+                "- Fórmula: (Watts x Tempo de Uso Diário (Horas) / 1000)<br>" +
+                "<br>Exemplo:<br>" +
+                "- Potência do Aparelho: 1000W<br>" +
+                "- Tempo de Uso Diário: 30 minutos (0.5 horas)<br><br>" +
+                "Consumo Diário (kWh) = 1000W × 0.5h / 1000<br>" +
+                "Consumo Diário (kWh) = 0.5kWh</html>";
+
+        JLabel txtCalculo = new JLabel();
+        txtCalculo.setText(txtCalculoInfo);
+        txtCalculo.setBounds(373,35,400,150);
+        txtCalculo.setFont(new Font("Arial",Font.BOLD,10));
+        txtCalculo.setForeground(Color.BLACK);
+        getPanelAjuda().add(txtCalculo);
+
+        JLabel txtCalculoMensalTitulo = new JLabel("Calculo do Custo Mensal:");
+        txtCalculoMensalTitulo.setBounds(375,182,200,10);
+        txtCalculoMensalTitulo.setFont(new Font("Arial",Font.BOLD,12));
+        txtCalculoMensalTitulo.setForeground(Color.BLUE);
+        getPanelAjuda().add(txtCalculoMensalTitulo);
+
+        String txtCustoInfo = "<html>- Informe a tarifa de energia cobrada pela sua fornecedora <br>(em R$/kWh).<br>" +
+                "- É multiplicado o consumo mensal total de todos os <br>aparelho em kWh pela tarifa de energia.<br>" +
+                "- Fórmula: (Consumo Mensal em kWh) x (Tarifa de Energia)<br><br>" +
+                "Exemplo:<br>" +
+                "Supondo que a tarifa de energia seja R$0,60 por kWh.<br>" +
+                "- Custo Total Mensal (R$) = kWh × Tarifa de Energia<br>" +
+                "- Custo Total Mensal (R$) = 15kWh × R$0,60/kWh<br>" +
+                "- Custo Total Mensal (R$) = R$9,00<br><br>" +
+                "OBS: Importante destacar que o Custo Mensal calculado<br>" +
+                "pelo nosso aplicativo, calcula todos os aparelhos.<br>" +
+                "Consumo Mensal dos Aparelhos (kWh) × Tarifa de energia</html>";
+
+        JLabel txtCusto = new JLabel();
+        txtCusto.setText(txtCustoInfo);
+        txtCusto.setBounds(373,196,400,200);
+        txtCusto.setFont(new Font("Arial",Font.BOLD,10));
+        txtCusto.setForeground(Color.BLACK);
+        getPanelAjuda().add(txtCusto);
+
+        JLabel txtCompanhiaTitulo = new JLabel("Especificações da Companhia:");
+        txtCompanhiaTitulo.setBounds(375,408,300,10);
+        txtCompanhiaTitulo.setFont(new Font("Arial",Font.BOLD,12));
+        txtCompanhiaTitulo.setForeground(Color.BLUE);
+        getPanelAjuda().add(txtCompanhiaTitulo);
+
+        String txtCompanhiaInfo = "<html>É possivel cadastrar mais de uma Companhia e<br>" +
+                "escolher qual Companhia fazer o calculo do Custo Mensal.<br>" +
+                "Cada distribuidora terá suas Tarifas e Encargos cobrados.<br>" +
+                "Você pode ver as especificações para o cadastro da<br>" +
+                "Companhia na sua Conta de Luz.</html>";
+
+        JLabel txtEspecificacao = new JLabel();
+        txtEspecificacao.setText(txtCompanhiaInfo);
+        txtEspecificacao.setBounds(373,356,400,200);
+        txtEspecificacao.setFont(new Font("Arial",Font.BOLD,10));
+        txtEspecificacao.setForeground(Color.BLACK);
+        getPanelAjuda().add(txtEspecificacao);
+
+        // - PAINEL DE DETALHES -
+        JPanel panelDetalhesAparelhos = new JPanel();
+        panelDetalhesAparelhos.setBorder(BorderFactory.createTitledBorder("CONSUMO / CUSTO / CALCULOS"));
+        panelDetalhesAparelhos.setBounds(364,15,310,490);
+        getPanelAjuda().add(panelDetalhesAparelhos);
+
         // -------------------------------------------FIM AJUDA----------------------------------------------------- //
 
         // Apenas um panel de fundo

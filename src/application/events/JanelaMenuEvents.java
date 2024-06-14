@@ -15,8 +15,12 @@ import application.view.JanelaLoginView;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.net.URI;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.util.List;
@@ -640,8 +644,23 @@ public class JanelaMenuEvents extends JanelaMenuService {
                 getFieldNovoLogin().setText("");
                 getFielNovaSenha().setText("");
             }
+
         });
+
+        // abrir o link no navegador
+        getIconGithub().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                try {
+                    Desktop.getDesktop().browse(new URI("https://github.com/d0uglas77p/ControleEnergia"));
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
+
     }
+
 
     //-----------------METODOS APARELHOS-----------------//
 
