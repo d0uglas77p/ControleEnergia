@@ -358,8 +358,21 @@ public class JanelaMenuService extends JFrame {
 
     // Painel de Ajuda
     private JPanel panelAjuda = new JPanel();
+    private JLabel iconGithub = new JLabel();
+    private JLabel iconPersonagem = new JLabel();
+    private JLabel iconChat = new JLabel();
+
     public JPanel getPanelAjuda() {
         return panelAjuda;
+    }
+    public JLabel getIconGithub() {
+        return iconGithub;
+    }
+    public JLabel getIconPersonagem() {
+        return iconPersonagem;
+    }
+    public JLabel getIconChat() {
+        return iconChat;
     }
 
     // Botões do Sair
