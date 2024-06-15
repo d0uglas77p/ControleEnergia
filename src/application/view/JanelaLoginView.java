@@ -1,5 +1,6 @@
 package application.view;
 
+import application.Main;
 import application.events.JanelaLoginEvents;
 
 import javax.swing.*;
@@ -20,6 +21,11 @@ public class JanelaLoginView extends JanelaLoginEvents {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         add(panelLogin);
+
+        // Define o ícone da janela
+        ImageIcon iconJanela = new ImageIcon(Main.class.getResource("/application/view/icons/janela.png"));
+        Image imageJanela = iconJanela.getImage();
+        setIconImage(imageJanela);
 
         // Configuração layout como GridBagLayout
         panelLogin.setLayout(new GridBagLayout());
