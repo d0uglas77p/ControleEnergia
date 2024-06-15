@@ -35,6 +35,11 @@ public class JanelaMenuView extends JanelaMenuEvents {
         getFrameMenu().setResizable(false);
         getFrameMenu().setLocationRelativeTo(null);
 
+        // Define o ícone da janela
+        ImageIcon iconJanela = new ImageIcon(Main.class.getResource("/application/view/icons/janela.png"));
+        Image imageJanela = iconJanela.getImage();
+        getFrameMenu().setIconImage(imageJanela);
+
         // MENU
         // --------------------------------------------------------------------------------------------------------- //
         // Painel de Menu, onde fica as opções do menu
