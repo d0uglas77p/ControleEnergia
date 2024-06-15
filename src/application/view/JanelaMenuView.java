@@ -163,15 +163,17 @@ public class JanelaMenuView extends JanelaMenuEvents {
         // TELAS DAS OPÇÕES DE MENU
         // --------------------------------------------------------------------------------------------------------- //
         // - TELA DE INICIO DA OPÇÃO DE MENU INICIO -
-        getPanelInicio().setBounds(280,0,705,562);
+        getPanelInicio().setBounds(250,0,765,562);
         getPanelInicio().setLayout(null);
         getFrameMenu().add(getPanelInicio());
-        //texto
-        JLabel txtInicio = new JLabel("INICIO");
-        txtInicio.setBounds(300,20,100,20);
-        txtInicio.setFont(new Font("Arial",Font.BOLD,18));
-        txtInicio.setForeground(Color.BLACK);
-        getPanelInicio().add(txtInicio);
+
+        ImageIcon fundoInicioPane = new ImageIcon(Main.class.getResource("/application/view/icons/inicioPane.png"));
+        getFundoInicioPane().setIcon(fundoInicioPane);
+        getFundoInicioPane().setBounds(0,0,745,562);
+        getFundoInicioPane().setVisible(true);
+        getPanelInicio().add(getFundoInicioPane());
+
+
         // -------------------------------------------FIM INICIO---------------------------------------------------- //
 
 

@@ -21,15 +21,20 @@ public class JanelaMenuService extends JFrame {
 
     // MENU INICIO
     // Botão de Inicio
-    private JButton btnInicio = new JButton("Inicio");
+    private JButton btnInicio = new JButton("Início");
     public JButton getBtnInicio() {
         return btnInicio;
     }
 
     // icons do menu Inicio
     private JLabel iconInicio = new JLabel();
+    private JLabel fundoInicioPane = new JLabel();
     public JLabel getIconInicio() {
         return iconInicio;
+    }
+
+    public JLabel getFundoInicioPane() {
+        return fundoInicioPane;
     }
 
     // Painel de Inicio
