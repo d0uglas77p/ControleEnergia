@@ -123,163 +123,163 @@ public class JanelaMenuEvents extends JanelaMenuService {
                 getBtnCadastrarAparelho().setVisible(true);
                 getBtnExcluirAparelho().setVisible(true);
                 getBtnCustoMensal().setVisible(true);
+            }
+        });
 
-                // Método responsável para cadastrar novos aparelhos
-                getBtnCadastrarAparelho().addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        // Obter usuário logado
+        // Método responsável para cadastrar novos aparelhos
+        getBtnCadastrarAparelho().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Obter usuário logado
+                String usuarioLogado = getLogado().getText();
+                // Obter usuário logado no banco de dados
+                Usuario usuarioAtual = usuarioDAO.buscarUsuario(usuarioLogado);
+
+                Aparelho aparelho = new Aparelho();
+                aparelho.setNomeAparelho(getFieldNomeAparelho().getText());
+                aparelho.setNomeFabricante(getFieldNomeFabricante().getText());
+                aparelho.setMarca(getFieldMarca().getText());
+                aparelho.setModelo(getFieldModelo().getText());
+                aparelho.setVolts(getFieldVolts().getText());
+                aparelho.setWatts(getFieldWatts().getText());
+                aparelho.setTempo(getFieldTempo().getText());
+
+                // Verifica se volts, watts e tempo são numéricos
+                try {
+                    double volts = Double.parseDouble(getFieldVolts().getText());
+                    aparelho.setVolts(String.valueOf(volts));
+
+                    double watts = Double.parseDouble(getFieldWatts().getText());
+                    aparelho.setWatts(String.valueOf(watts));
+
+                    double tempo = Double.parseDouble(getFieldTempo().getText());
+                    aparelho.setTempo(String.valueOf(tempo));
+
+                    // Calcular kWh
+                    double kwh = (watts * tempo) / 1000;
+                    aparelho.setKwh(String.valueOf(kwh));
+
+                    if (new AparelhoDAO().inserirNovoAparelho(aparelho, usuarioAtual.getId())) {
+                        // Limpa os campos de dados que estavam preenchidos
+                        getFieldNomeAparelho().setText("");
+                        getFieldNomeFabricante().setText("");
+                        getFieldMarca().setText("");
+                        getFieldModelo().setText("");
+                        getFieldVolts().setText("");
+                        getFieldWatts().setText("");
+                        getFieldTempo().setText("");
+                        JOptionPane.showMessageDialog(null, "Aparelho cadastrado com sucesso!", "SUCESSO", JOptionPane.INFORMATION_MESSAGE);
+                        atualizarListaAparelhos();
+                    }  else {
+                        JOptionPane.showMessageDialog(null, "Falha ao cadastrar aparelho!\nVerifique se contém algum campo vazio.", "ERRO", JOptionPane.ERROR_MESSAGE);
+                    }
+
+                } catch (NumberFormatException exception) {
+                    JOptionPane.showMessageDialog(null, "Atenção! Volts, Watts e o Tempo deverão ser númericos!", "ERRO", JOptionPane.ERROR_MESSAGE);
+                    exception.printStackTrace();
+                }
+            }
+        });
+
+        // ActionListener para o botão de exclusão
+        getBtnExcluirAparelho().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int selecionaLinha = getTabelaAparelho().getSelectedRow();
+
+                if (selecionaLinha != -1) {
+                    // Obtém o ID do aparelho no banco de dados
+                    int idAparelho = buscarIdAparelhoNaLinha(selecionaLinha);
+
+                    if (idAparelho != -1) {
+                        // usuário logado
                         String usuarioLogado = getLogado().getText();
-                        // Obter usuário logado no banco de dados
                         Usuario usuarioAtual = usuarioDAO.buscarUsuario(usuarioLogado);
 
-                        Aparelho aparelho = new Aparelho();
-                        aparelho.setNomeAparelho(getFieldNomeAparelho().getText());
-                        aparelho.setNomeFabricante(getFieldNomeFabricante().getText());
-                        aparelho.setMarca(getFieldMarca().getText());
-                        aparelho.setModelo(getFieldModelo().getText());
-                        aparelho.setVolts(getFieldVolts().getText());
-                        aparelho.setWatts(getFieldWatts().getText());
-                        aparelho.setTempo(getFieldTempo().getText());
-
-                        // Verifica se volts, watts e tempo são numéricos
-                        try {
-                            double volts = Double.parseDouble(getFieldVolts().getText());
-                            aparelho.setVolts(String.valueOf(volts));
-
-                            double watts = Double.parseDouble(getFieldWatts().getText());
-                            aparelho.setWatts(String.valueOf(watts));
-
-                            double tempo = Double.parseDouble(getFieldTempo().getText());
-                            aparelho.setTempo(String.valueOf(tempo));
-
-                            // Calcular kWh
-                            double kwh = (watts * tempo) / 1000;
-                            aparelho.setKwh(String.valueOf(kwh));
-
-                            if (new AparelhoDAO().inserirNovoAparelho(aparelho, usuarioAtual.getId())) {
-                                // Limpa os campos de dados que estavam preenchidos
-                                getFieldNomeAparelho().setText("");
-                                getFieldNomeFabricante().setText("");
-                                getFieldMarca().setText("");
-                                getFieldModelo().setText("");
-                                getFieldVolts().setText("");
-                                getFieldWatts().setText("");
-                                getFieldTempo().setText("");
-                                JOptionPane.showMessageDialog(null, "Aparelho cadastrado com sucesso!", "SUCESSO", JOptionPane.INFORMATION_MESSAGE);
+                        // Confirmação
+                        int resposta = JOptionPane.showConfirmDialog(null, "Aparelho será apagado, tem certeza que deseja excluir?", "EXCLUIR APARELHO", JOptionPane.OK_CANCEL_OPTION);
+                        if (resposta == JOptionPane.OK_OPTION) {
+                            // Exclui o aparelho pelo ID
+                            if (aparelhoDAO.excluirAparelhoId(idAparelho, usuarioAtual.getId())) {
                                 atualizarListaAparelhos();
-                            }  else {
-                                JOptionPane.showMessageDialog(null, "Falha ao cadastrar aparelho!\nVerifique se contém algum campo vazio.", "ERRO", JOptionPane.ERROR_MESSAGE);
-                            }
-
-                        } catch (NumberFormatException exception) {
-                            JOptionPane.showMessageDialog(null, "Atenção! Volts, Watts e o Tempo deverão ser númericos!", "ERRO", JOptionPane.ERROR_MESSAGE);
-                            exception.printStackTrace();
-                        }
-                    }
-                });
-
-                // ActionListener para o botão de exclusão
-                getBtnExcluirAparelho().addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        int selecionaLinha = getTabelaAparelho().getSelectedRow();
-
-                        if (selecionaLinha != -1) {
-                            // Obtém o ID do aparelho no banco de dados
-                            int idAparelho = buscarIdAparelhoNaLinha(selecionaLinha);
-
-                            if (idAparelho != -1) {
-                                // usuário logado
-                                String usuarioLogado = getLogado().getText();
-                                Usuario usuarioAtual = usuarioDAO.buscarUsuario(usuarioLogado);
-
-                                // Confirmação
-                                int resposta = JOptionPane.showConfirmDialog(null, "Aparelho será apagado, tem certeza que deseja excluir?", "EXCLUIR APARELHO", JOptionPane.OK_CANCEL_OPTION);
-                                if (resposta == JOptionPane.OK_OPTION) {
-                                    // Exclui o aparelho pelo ID
-                                    if (aparelhoDAO.excluirAparelhoId(idAparelho, usuarioAtual.getId())) {
-                                        atualizarListaAparelhos();
-                                        JOptionPane.showMessageDialog(null, "Aparelho excluído com sucesso!", "SUCESSO", JOptionPane.INFORMATION_MESSAGE);
-                                    } else {
-                                        JOptionPane.showMessageDialog(null, "Falha ao excluir aparelho.", "ERRO", JOptionPane.ERROR_MESSAGE);
-                                    }
-                                }
+                                JOptionPane.showMessageDialog(null, "Aparelho excluído com sucesso!", "SUCESSO", JOptionPane.INFORMATION_MESSAGE);
                             } else {
-                                JOptionPane.showMessageDialog(null, "Falha ao buscar o ID do aparelho.", "ERRO", JOptionPane.ERROR_MESSAGE);
-                            }
-                        } else {
-                            JOptionPane.showMessageDialog(null, "Selecione um aparelho para excluir.", "AVISO", JOptionPane.WARNING_MESSAGE);
-                        }
-                    }
-                });
-
-                // ActionListener para o botão de Custo Mensal dos Aparelhos
-                getBtnCustoMensal().addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        // Obter usuário logado
-                        String usuarioLogado = getLogado().getText();
-                        Usuario usuarioAtual = usuarioDAO.buscarUsuario(usuarioLogado);
-
-                        // Verificar se existe uma companhia cadastrada
-                        List<Companhia> companhias = companhiaDAO.buscarCompanhias(usuarioAtual.getId());
-                        if (companhias.isEmpty()) {
-                            JOptionPane.showMessageDialog(null, "Nenhuma companhia cadastrada. Por favor, cadastre uma companhia antes de calcular o custo mensal.", "ERRO", JOptionPane.ERROR_MESSAGE);
-                            return;
-                        }
-
-                        // Criar um JComboBox para selecionar a companhia
-                        JComboBox<String> comboBoxCompanhias = new JComboBox<>();
-                        for (Companhia companhia : companhias) {
-                            comboBoxCompanhias.addItem(companhia.getNomeCompanhia());
-                        }
-
-                        // Mostrar um diálogo para selecionar a companhia
-                        int option = JOptionPane.showConfirmDialog(null, comboBoxCompanhias, "Selecione a Companhia", JOptionPane.OK_CANCEL_OPTION);
-                        if (option != JOptionPane.OK_OPTION) {
-                            return; // Usuário cancelou a seleção
-                        }
-
-                        // Obter a companhia selecionada no JComboBox
-                        String companhiaSelecionadaNome = (String) comboBoxCompanhias.getSelectedItem();
-                        Companhia companhiaSelecionada = null;
-                        for (Companhia companhia : companhias) {
-                            if (companhia.getNomeCompanhia().equals(companhiaSelecionadaNome)) {
-                                companhiaSelecionada = companhia;
-                                break;
+                                JOptionPane.showMessageDialog(null, "Falha ao excluir aparelho.", "ERRO", JOptionPane.ERROR_MESSAGE);
                             }
                         }
-
-                        if (companhiaSelecionada == null) {
-                            JOptionPane.showMessageDialog(null, "Companhia selecionada não encontrada. Por favor, selecione uma companhia válida.", "ERRO", JOptionPane.ERROR_MESSAGE);
-                            return;
-                        }
-
-                        double tarifa = Double.parseDouble(companhiaSelecionada.getTarifa());
-
-                        // Buscar aparelhos do usuário
-                        List<Aparelho> aparelhos = aparelhoDAO.buscarAparelhos(usuarioAtual.getId());
-                        if (aparelhos.isEmpty()) {
-                            JOptionPane.showMessageDialog(null, "Nenhum aparelho cadastrado. Por favor, cadastre aparelhos antes de calcular o custo mensal.", "ERRO", JOptionPane.ERROR_MESSAGE);
-                            return;
-                        }
-
-                        // Calcular o custo mensal
-                        double custoMensalTotal = 0;
-                        for (Aparelho aparelho : aparelhos) {
-                            double watts = Double.parseDouble(aparelho.getWatts());
-                            double horas = Double.parseDouble(aparelho.getTempo());
-                            double kwh = (watts * horas) / 1000;
-                            double custoMensal = kwh * tarifa * 30;
-                            custoMensalTotal += custoMensal;
-                        }
-
-                        // Abrir nova janela para mostrar o custo mensal
-                        JanelaCustoMensalView custoMensalView = new JanelaCustoMensalView(custoMensalTotal);
-                        custoMensalView.setVisible(true);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Falha ao buscar o ID do aparelho.", "ERRO", JOptionPane.ERROR_MESSAGE);
                     }
-                });
+                } else {
+                    JOptionPane.showMessageDialog(null, "Selecione um aparelho para excluir.", "AVISO", JOptionPane.WARNING_MESSAGE);
+                }
+            }
+        });
+
+        // ActionListener para o botão de Custo Mensal dos Aparelhos
+        getBtnCustoMensal().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Obter usuário logado
+                String usuarioLogado = getLogado().getText();
+                Usuario usuarioAtual = usuarioDAO.buscarUsuario(usuarioLogado);
+
+                // Verificar se existe uma companhia cadastrada
+                List<Companhia> companhias = companhiaDAO.buscarCompanhias(usuarioAtual.getId());
+                if (companhias.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Nenhuma companhia cadastrada. Por favor, cadastre uma companhia antes de calcular o custo mensal.", "ERRO", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                // Criar um JComboBox para selecionar a companhia
+                JComboBox<String> comboBoxCompanhias = new JComboBox<>();
+                for (Companhia companhia : companhias) {
+                    comboBoxCompanhias.addItem(companhia.getNomeCompanhia());
+                }
+
+                // Mostrar um diálogo para selecionar a companhia
+                int option = JOptionPane.showConfirmDialog(null, comboBoxCompanhias, "Selecione a Companhia", JOptionPane.OK_CANCEL_OPTION);
+                if (option != JOptionPane.OK_OPTION) {
+                    return; // Usuário cancelou a seleção
+                }
+
+                // Obter a companhia selecionada no JComboBox
+                String companhiaSelecionadaNome = (String) comboBoxCompanhias.getSelectedItem();
+                Companhia companhiaSelecionada = null;
+                for (Companhia companhia : companhias) {
+                    if (companhia.getNomeCompanhia().equals(companhiaSelecionadaNome)) {
+                        companhiaSelecionada = companhia;
+                        break;
+                    }
+                }
+
+                if (companhiaSelecionada == null) {
+                    JOptionPane.showMessageDialog(null, "Companhia selecionada não encontrada. Por favor, selecione uma companhia válida.", "ERRO", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                double tarifa = Double.parseDouble(companhiaSelecionada.getTarifa());
+
+                // Buscar aparelhos do usuário
+                List<Aparelho> aparelhos = aparelhoDAO.buscarAparelhos(usuarioAtual.getId());
+                if (aparelhos.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Nenhum aparelho cadastrado. Por favor, cadastre aparelhos antes de calcular o custo mensal.", "ERRO", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                // Calcular o custo mensal
+                double custoMensalTotal = 0;
+                for (Aparelho aparelho : aparelhos) {
+                    double watts = Double.parseDouble(aparelho.getWatts());
+                    double horas = Double.parseDouble(aparelho.getTempo());
+                    double kwh = (watts * horas) / 1000;
+                    double custoMensal = kwh * tarifa * 30;
+                    custoMensalTotal += custoMensal;
+                }
+
+                // Abrir nova janela para mostrar o custo mensal
+                JanelaCustoMensalView custoMensalView = new JanelaCustoMensalView(custoMensalTotal);
+                custoMensalView.setVisible(true);
             }
         });
 
@@ -325,109 +325,109 @@ public class JanelaMenuEvents extends JanelaMenuService {
                 getTabelaCompanhia().setVisible(true);
                 getCadastrarCompanhia().setVisible(true);
                 getBtnExcluirCompanhia().setVisible(true);
+            }
+        });
 
-                // Grupo A vizualização
-                getCheckGrupoA().addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        getMediaTensao().setVisible(true);
-                        getAltaTensao().setVisible(true);
-                        getResidencial().setVisible(false);
-                        getRural().setVisible(false);
-                        getOutros().setVisible(false);
+        // Grupo A vizualização
+        getCheckGrupoA().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                getMediaTensao().setVisible(true);
+                getAltaTensao().setVisible(true);
+                getResidencial().setVisible(false);
+                getRural().setVisible(false);
+                getOutros().setVisible(false);
+            }
+        });
+
+        // Grupo B vizualização
+        getCheckGrupoB().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                getMediaTensao().setVisible(false);
+                getAltaTensao().setVisible(false);
+                getResidencial().setVisible(true);
+                getRural().setVisible(true);
+                getOutros().setVisible(true);
+            }
+        });
+
+        // Método responsável para cadastrar novas companhias
+        getCadastrarCompanhia().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Obter usuário logado
+                String usuarioLogado = getLogado().getText();
+                // Obter usuário logado no banco de dados
+                Usuario usuarioAtual = usuarioDAO.buscarUsuario(usuarioLogado);
+
+                Companhia companhia = new Companhia();
+
+                // Adiciona os dados da nova companhia
+                Object selecaoFornecimento = getComboTipoFornecimento().getSelectedItem();
+
+                companhia.setNomeCompanhia(getFieldNomeCompanhia().getText());
+                companhia.setCnpj(getFieldCnpjCompanhia().getText());
+                companhia.setTelefoneCompanhia(getFieldTelefoneCompanhia().getText());
+                companhia.setTipoFornecimento(selecaoFornecimento.toString());
+                companhia.setMedidor(getFieldNumMedidor().getText());
+
+                // Verifica se a tarifa é um número
+                try {
+                    double tarifa = Double.parseDouble(getFieldTarifa().getText());
+                    companhia.setTarifa(String.valueOf(tarifa));
+
+                    if (new CompanhiaDAO().inserirNovaCompanhia(companhia, usuarioAtual.getId())) {
+                        // Limpa os campos de dados que estavam preenchidos
+                        getFieldNomeCompanhia().setText("");
+                        getFieldCnpjCompanhia().setText("");
+                        getFieldTelefoneCompanhia().setText("");
+                        getFieldNumMedidor().setText("");
+                        getFieldTarifa().setText("");
+                        JOptionPane.showMessageDialog(null, "Companhia cadastrada com sucesso!", "SUCESSO", JOptionPane.INFORMATION_MESSAGE);
+                        atualizarListaCompanhias();
+                    }  else {
+                        JOptionPane.showMessageDialog(null, "Falha ao cadastrar companhia!\nVerifique se contém algum campo vazio \nou se já contém uma companhia com o mesmo CNPJ cadastrado.", "ERRO", JOptionPane.ERROR_MESSAGE);
                     }
-                });
 
-                // Grupo B vizualização
-                getCheckGrupoB().addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        getMediaTensao().setVisible(false);
-                        getAltaTensao().setVisible(false);
-                        getResidencial().setVisible(true);
-                        getRural().setVisible(true);
-                        getOutros().setVisible(true);
-                    }
-                });
+                } catch (NumberFormatException exception) {
+                    JOptionPane.showMessageDialog(null, "Atenção, tarifa tem que ser um número!", "ERRO", JOptionPane.ERROR_MESSAGE);
+                    exception.printStackTrace();
+                }
+            }
+        });
 
-                // Método responsável para cadastrar novas companhias
-                getCadastrarCompanhia().addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        // Obter usuário logado
-                        String usuarioLogado = getLogado().getText();
-                        // Obter usuário logado no banco de dados
-                        Usuario usuarioAtual = usuarioDAO.buscarUsuario(usuarioLogado);
+        // Método responsável para excluir companhia
+        getBtnExcluirCompanhia().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Seleciona uma linha da tabela de companhia
+                int selecionaLinha = getTabelaCompanhia().getSelectedRow();
 
-                        Companhia companhia = new Companhia();
+                if (selecionaLinha != -1) {
+                    // Obtém o CNPJ da linha selecionada
+                    String cnpj = (String) getTabelaCompanhia().getValueAt(selecionaLinha, 1);
 
-                        // Adiciona os dados da nova companhia
-                        Object selecaoFornecimento = getComboTipoFornecimento().getSelectedItem();
+                    // Obter usuário logado
+                    String usuarioLogado = getLogado().getText();
 
-                        companhia.setNomeCompanhia(getFieldNomeCompanhia().getText());
-                        companhia.setCnpj(getFieldCnpjCompanhia().getText());
-                        companhia.setTelefoneCompanhia(getFieldTelefoneCompanhia().getText());
-                        companhia.setTipoFornecimento(selecaoFornecimento.toString());
-                        companhia.setMedidor(getFieldNumMedidor().getText());
+                    // Obter usuário logado no banco de dados
+                    Usuario usuarioAtual = usuarioDAO.buscarUsuario(usuarioLogado);
 
-                        // Verifica se a tarifa é um número
-                        try {
-                            double tarifa = Double.parseDouble(getFieldTarifa().getText());
-                            companhia.setTarifa(String.valueOf(tarifa));
-
-                            if (new CompanhiaDAO().inserirNovaCompanhia(companhia, usuarioAtual.getId())) {
-                                // Limpa os campos de dados que estavam preenchidos
-                                getFieldNomeCompanhia().setText("");
-                                getFieldCnpjCompanhia().setText("");
-                                getFieldTelefoneCompanhia().setText("");
-                                getFieldNumMedidor().setText("");
-                                getFieldTarifa().setText("");
-                                JOptionPane.showMessageDialog(null, "Companhia cadastrada com sucesso!", "SUCESSO", JOptionPane.INFORMATION_MESSAGE);
-                                atualizarListaCompanhias();
-                            }  else {
-                                JOptionPane.showMessageDialog(null, "Falha ao cadastrar companhia!\nVerifique se contém algum campo vazio \nou se já contém uma companhia com o mesmo CNPJ cadastrado.", "ERRO", JOptionPane.ERROR_MESSAGE);
-                            }
-
-                        } catch (NumberFormatException exception) {
-                            JOptionPane.showMessageDialog(null, "Atenção, tarifa tem que ser um número!", "ERRO", JOptionPane.ERROR_MESSAGE);
-                            exception.printStackTrace();
+                    int resposta = JOptionPane.showConfirmDialog(null, "Companhia será apagada, tem certeza que deseja excluir?", "EXCLUIR CONTA", JOptionPane.CANCEL_OPTION);
+                    if (resposta == JOptionPane.OK_OPTION) {
+                        // Exclui a companhia por CNPJ
+                        if (new CompanhiaDAO().excluirCompanhiaCnpj(cnpj, usuarioAtual.getId())) {
+                            atualizarListaCompanhias();
+                            JOptionPane.showMessageDialog(null, "Companhia excluída com sucesso!", "SUCESSO", JOptionPane.INFORMATION_MESSAGE);
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Falha ao excluir a companhia.", "ERRO", JOptionPane.ERROR_MESSAGE);
                         }
                     }
-                });
 
-                // Método responsável para excluir companhia
-                getBtnExcluirCompanhia().addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        // Seleciona uma linha da tabela de companhia
-                        int selecionaLinha = getTabelaCompanhia().getSelectedRow();
-
-                        if (selecionaLinha != -1) {
-                            // Obtém o CNPJ da linha selecionada
-                            String cnpj = (String) getTabelaCompanhia().getValueAt(selecionaLinha, 1);
-
-                            // Obter usuário logado
-                            String usuarioLogado = getLogado().getText();
-
-                            // Obter usuário logado no banco de dados
-                            Usuario usuarioAtual = usuarioDAO.buscarUsuario(usuarioLogado);
-
-                            int resposta = JOptionPane.showConfirmDialog(null, "Companhia será apagada, tem certeza que deseja excluir?", "EXCLUIR CONTA", JOptionPane.CANCEL_OPTION);
-                            if (resposta == JOptionPane.OK_OPTION) {
-                                // Exclui a companhia por CNPJ
-                                if (new CompanhiaDAO().excluirCompanhiaCnpj(cnpj, usuarioAtual.getId())) {
-                                    atualizarListaCompanhias();
-                                    JOptionPane.showMessageDialog(null, "Companhia excluída com sucesso!", "SUCESSO", JOptionPane.INFORMATION_MESSAGE);
-                                } else {
-                                    JOptionPane.showMessageDialog(null, "Falha ao excluir a companhia.", "ERRO", JOptionPane.ERROR_MESSAGE);
-                                }
-                            }
-
-                        }else {
-                            JOptionPane.showMessageDialog(null, "Selecione uma companhia para excluir.", "AVISO", JOptionPane.WARNING_MESSAGE);
-                        }
-                    }
-                });
+                }else {
+                    JOptionPane.showMessageDialog(null, "Selecione uma companhia para excluir.", "AVISO", JOptionPane.WARNING_MESSAGE);
+                }
             }
         });
 
@@ -469,149 +469,149 @@ public class JanelaMenuEvents extends JanelaMenuService {
                 getFieldBairro().setVisible(true);
                 getFieldCidade().setVisible(true);
                 getFieldEstado().setVisible(true);
+            }
+        });
 
-                // Botão que altera os dados do usuário
-                getBtnAlterarDados().addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
+        // Botão que altera os dados do usuário
+        getBtnAlterarDados().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Obter usuário logado
+                String usuarioLogado = getLogado().getText();
+                // Obter usuário logado no banco de dados
+                Usuario usuarioAtual = usuarioDAO.buscarUsuario(usuarioLogado);
+                // resposta recebe a opção do JOption
+                int resposta = JOptionPane.showConfirmDialog(null, "Tem certeza que quer alterar os dados?", "ALTERAR DADOS", JOptionPane.CANCEL_OPTION);
+
+                if (resposta == JOptionPane.OK_OPTION) {
+                    // Confirmou a alteração em OK
+                    // Modificar os dados do usuario existentes
+                    usuarioAtual.setNome(getFieldNovoNome().getText());
+                    usuarioAtual.setSobrenome(getFieldNovoSobrenome().getText());
+                    usuarioAtual.setTelefone(getFieldNovoTelefone().getText());
+                    usuarioAtual.setEmail(getFieldNovoEmail().getText());
+                    // Chama o método para alterar os dados no banco de dados
+                    boolean sucesso = usuarioDAO.alterarDadosUsuario(usuarioAtual);
+
+                    if (sucesso) {
+                        // Labels que pega os dados que foram atualizados
+                        getNomebd().setText(usuarioAtual.getNome());
+                        getSobrenomebd().setText(usuarioAtual.getSobrenome());
+                        getTelefonebd().setText(usuarioAtual.getTelefone());
+                        getEmailbd().setText(usuarioAtual.getEmail());
+
+                        // Limpa os campos de dados que estavam preenchidos
+                        getFieldNovoNome().setText("");
+                        getFieldNovoSobrenome().setText("");
+                        getFieldNovoTelefone().setText("");
+                        getFieldNovoEmail().setText("");
+                        JOptionPane.showMessageDialog(null, "Dados alterados com sucesso!");
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Falha ao alterar os dados!\nVerifique se os campos estão vazios e tenta novamente.", "ERRO", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            }
+        });
+
+        // Botão que exclui a conta inteira do usuario
+        getBtnExcluirUsuario().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // VERIFICAÇÃO DO USUARIO NO BANCO DE DADOS
+                String nomeUsuario = getFieldNovoLogin().getText();
+                String senhaUsuario = getFielNovaSenha().getText();
+
+                try {
+                    // Verificar se o usuario existe no banco de dados
+                    if (new UsuarioDAO().verificarUsuario(nomeUsuario)) {
+                        // O Usuario existe, agora verificar senha
+                        Usuario usuario = new UsuarioDAO().buscarUsuario(nomeUsuario);
                         // Obter usuário logado
                         String usuarioLogado = getLogado().getText();
-                        // Obter usuário logado no banco de dados
-                        Usuario usuarioAtual = usuarioDAO.buscarUsuario(usuarioLogado);
-                        // resposta recebe a opção do JOption
-                        int resposta = JOptionPane.showConfirmDialog(null, "Tem certeza que quer alterar os dados?", "ALTERAR DADOS", JOptionPane.CANCEL_OPTION);
 
-                        if (resposta == JOptionPane.OK_OPTION) {
-                            // Confirmou a alteração em OK
-                            // Modificar os dados do usuario existentes
-                            usuarioAtual.setNome(getFieldNovoNome().getText());
-                            usuarioAtual.setSobrenome(getFieldNovoSobrenome().getText());
-                            usuarioAtual.setTelefone(getFieldNovoTelefone().getText());
-                            usuarioAtual.setEmail(getFieldNovoEmail().getText());
-                            // Chama o método para alterar os dados no banco de dados
-                            boolean sucesso = usuarioDAO.alterarDadosUsuario(usuarioAtual);
+                        if (usuario != null && senhaUsuario.equals(usuario.getSenha()) && usuarioLogado.equals(usuario.getUsuario())) {
+                            // Obter usuário logado no banco de dados
+                            Usuario usuarioAtual = usuarioDAO.buscarUsuario(usuarioLogado);
+                            // resposta recebe a opção do JOption
+                            int resposta = JOptionPane.showConfirmDialog(null, "Todos os seus dados serão apagados.\nTem certeza que quer excluir sua conta?", "EXCLUIR CONTA", JOptionPane.CANCEL_OPTION);
 
-                            if (sucesso) {
-                                // Labels que pega os dados que foram atualizados
-                                getNomebd().setText(usuarioAtual.getNome());
-                                getSobrenomebd().setText(usuarioAtual.getSobrenome());
-                                getTelefonebd().setText(usuarioAtual.getTelefone());
-                                getEmailbd().setText(usuarioAtual.getEmail());
+                            if (resposta == JOptionPane.OK_OPTION) {
+                                // Confirmou a alteração em OK
+                                // Endereço excluido com sucesso, agora exclua o usuário
+                                boolean usuarioExcluido = usuarioDAO.excluirUsuario(usuarioAtual.getId());
 
-                                // Limpa os campos de dados que estavam preenchidos
-                                getFieldNovoNome().setText("");
-                                getFieldNovoSobrenome().setText("");
-                                getFieldNovoTelefone().setText("");
-                                getFieldNovoEmail().setText("");
-                                JOptionPane.showMessageDialog(null, "Dados alterados com sucesso!");
-                            } else {
-                                JOptionPane.showMessageDialog(null, "Falha ao alterar os dados!\nVerifique se os campos estão vazios e tenta novamente.", "ERRO", JOptionPane.ERROR_MESSAGE);
-                            }
-                        }
-                    }
-                });
+                                if (usuarioExcluido) {
+                                    // Usuario excluido com sucesso
+                                    JanelaLoginView janelaLoginView = new JanelaLoginView(); // Cria a janela de login
+                                    janelaLoginView.setVisible(true); // Seta a visualização da janela de login
+                                    getFrameMenu().dispose(); // Fecha frame/janela de menu
 
-                // Botão que exclui a conta inteira do usuario
-                getBtnExcluirUsuario().addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        // VERIFICAÇÃO DO USUARIO NO BANCO DE DADOS
-                        String nomeUsuario = getFieldNovoLogin().getText();
-                        String senhaUsuario = getFielNovaSenha().getText();
+                                    // Excluir o endereço
+                                    boolean enderecoExcluido = enderecoDAO.excluirEndereco(usuarioAtual.getId());
 
-                        try {
-                            // Verificar se o usuario existe no banco de dados
-                            if (new UsuarioDAO().verificarUsuario(nomeUsuario)) {
-                                // O Usuario existe, agora verificar senha
-                                Usuario usuario = new UsuarioDAO().buscarUsuario(nomeUsuario);
-                                // Obter usuário logado
-                                String usuarioLogado = getLogado().getText();
-
-                                if (usuario != null && senhaUsuario.equals(usuario.getSenha()) && usuarioLogado.equals(usuario.getUsuario())) {
-                                    // Obter usuário logado no banco de dados
-                                    Usuario usuarioAtual = usuarioDAO.buscarUsuario(usuarioLogado);
-                                    // resposta recebe a opção do JOption
-                                    int resposta = JOptionPane.showConfirmDialog(null, "Todos os seus dados serão apagados.\nTem certeza que quer excluir sua conta?", "EXCLUIR CONTA", JOptionPane.CANCEL_OPTION);
-
-                                    if (resposta == JOptionPane.OK_OPTION) {
-                                        // Confirmou a alteração em OK
-                                        // Endereço excluido com sucesso, agora exclua o usuário
-                                        boolean usuarioExcluido = usuarioDAO.excluirUsuario(usuarioAtual.getId());
-
-                                        if (usuarioExcluido) {
-                                            // Usuario excluido com sucesso
-                                            JanelaLoginView janelaLoginView = new JanelaLoginView(); // Cria a janela de login
-                                            janelaLoginView.setVisible(true); // Seta a visualização da janela de login
-                                            getFrameMenu().dispose(); // Fecha frame/janela de menu
-
-                                            // Excluir o endereço
-                                            boolean enderecoExcluido = enderecoDAO.excluirEndereco(usuarioAtual.getId());
-
-                                            if (enderecoExcluido) {
-                                            }
-
-                                        } else {
-                                            // Falha ao exclui usuario
-                                            JOptionPane.showMessageDialog(null, "Erro ao excluir usuário.", "ERRO", JOptionPane.ERROR_MESSAGE);
-                                        }
+                                    if (enderecoExcluido) {
                                     }
+
                                 } else {
-                                    // usuario logado e Senha incorreta
-                                    JOptionPane.showMessageDialog(null, "Usuário ou Senha incorreta!","ERRO DE LOGIN", JOptionPane.ERROR_MESSAGE);
+                                    // Falha ao exclui usuario
+                                    JOptionPane.showMessageDialog(null, "Erro ao excluir usuário.", "ERRO", JOptionPane.ERROR_MESSAGE);
                                 }
-                            } else {
-                                // usuario não econtrado
-                                JOptionPane.showMessageDialog(null, "Usuário não encontrado!","ERRO DE LOGIN",JOptionPane.ERROR_MESSAGE);
                             }
-                        } catch (SQLException ex) {
-                            ex.printStackTrace(); // Tratando a exceção
-                        }
-                    }
-                });
-
-                // Botão que altera o endereço do usuari do usuário
-                getBtnAlterarEndereco().addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        // Obter usuário logado
-                        String usuarioLogado = getLogado().getText();
-                        // Obter usuário logado no banco de dados
-                        Usuario usuarioAtual = usuarioDAO.buscarUsuario(usuarioLogado);
-
-                        Endereco endereco = new Endereco();
-
-                        // Obter os dados do formulario
-                        endereco.setCep(getFieldCEP().getText());
-                        endereco.setRua(getFieldRua().getText());
-                        endereco.setNumero(getFieldNumero().getText());
-                        endereco.setBairro(getFieldBairro().getText());
-                        endereco.setCidade(getFieldCidade().getText());
-                        endereco.setEstado(getFieldEstado().getText());
-
-                        // Inserir no banco de dados
-                        if (new EnderecoDAO().inserirEndereco(endereco, usuarioAtual.getId())) {
-                            // Labels que pega os dados que foram atualizados
-                            getCepbd().setText(endereco.getCep());
-                            getRuabd().setText(endereco.getRua());
-                            getNumerobd().setText(endereco.getNumero());
-                            getBairrobd().setText(endereco.getBairro());
-                            getCidadebd().setText(endereco.getCidade());
-                            getEstadobd().setText(endereco.getEstado());
-
-                            // Limpa os campos de dados que estavam preenchidos
-                            getFieldCEP().setText("");
-                            getFieldRua().setText("");
-                            getFieldNumero().setText("");
-                            getFieldBairro().setText("");
-                            getFieldCidade().setText("");
-                            getFieldEstado().setText("");
-                            // Cadastro efetuado com sucesso
-                            JOptionPane.showMessageDialog(null, "Endereço atualizado com sucesso!\nSe for a primeira atualização do endereço, faça o login novamente para a atualização do sistema!", "SUCESSO", JOptionPane.INFORMATION_MESSAGE);
                         } else {
-                            JOptionPane.showMessageDialog(null, "Falha ao alterar o endereço!\nVerifique se os campos estão vazios e tenta novamente.", "ERRO", JOptionPane.ERROR_MESSAGE);
+                            // usuario logado e Senha incorreta
+                            JOptionPane.showMessageDialog(null, "Usuário ou Senha incorreta!","ERRO DE LOGIN", JOptionPane.ERROR_MESSAGE);
                         }
+                    } else {
+                        // usuario não econtrado
+                        JOptionPane.showMessageDialog(null, "Usuário não encontrado!","ERRO DE LOGIN",JOptionPane.ERROR_MESSAGE);
                     }
-                });
+                } catch (SQLException ex) {
+                    ex.printStackTrace(); // Tratando a exceção
+                }
+            }
+        });
+
+        // Botão que altera o endereço do usuari do usuário
+        getBtnAlterarEndereco().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Obter usuário logado
+                String usuarioLogado = getLogado().getText();
+                // Obter usuário logado no banco de dados
+                Usuario usuarioAtual = usuarioDAO.buscarUsuario(usuarioLogado);
+
+                Endereco endereco = new Endereco();
+
+                // Obter os dados do formulario
+                endereco.setCep(getFieldCEP().getText());
+                endereco.setRua(getFieldRua().getText());
+                endereco.setNumero(getFieldNumero().getText());
+                endereco.setBairro(getFieldBairro().getText());
+                endereco.setCidade(getFieldCidade().getText());
+                endereco.setEstado(getFieldEstado().getText());
+
+                // Inserir no banco de dados
+                if (new EnderecoDAO().inserirEndereco(endereco, usuarioAtual.getId())) {
+                    // Labels que pega os dados que foram atualizados
+                    getCepbd().setText(endereco.getCep());
+                    getRuabd().setText(endereco.getRua());
+                    getNumerobd().setText(endereco.getNumero());
+                    getBairrobd().setText(endereco.getBairro());
+                    getCidadebd().setText(endereco.getCidade());
+                    getEstadobd().setText(endereco.getEstado());
+
+                    // Limpa os campos de dados que estavam preenchidos
+                    getFieldCEP().setText("");
+                    getFieldRua().setText("");
+                    getFieldNumero().setText("");
+                    getFieldBairro().setText("");
+                    getFieldCidade().setText("");
+                    getFieldEstado().setText("");
+                    // Cadastro efetuado com sucesso
+                    JOptionPane.showMessageDialog(null, "Endereço atualizado com sucesso!\nSe for a primeira atualização do endereço, faça o login novamente para a atualização do sistema!", "SUCESSO", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Falha ao alterar o endereço!\nVerifique se os campos estão vazios e tenta novamente.", "ERRO", JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
 
@@ -661,9 +661,7 @@ public class JanelaMenuEvents extends JanelaMenuService {
 
     }
 
-
     //-----------------METODOS APARELHOS-----------------//
-
     // Método para atualizar a lista de aparelhos
     public void atualizarListaAparelhos() {
         String usuarioLogado = getLogado().getText();

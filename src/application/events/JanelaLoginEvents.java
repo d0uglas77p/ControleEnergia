@@ -60,7 +60,7 @@ public class JanelaLoginEvents extends JanelaLoginService {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Sobre
-                JOptionPane.showMessageDialog(null,"Aplicativo em desenvolvimento.\n              Versão 0.1");
+                JOptionPane.showMessageDialog(null,"Aplicativo em desenvolvimento.\n              Versão 1.0");
             }
         });
     }
