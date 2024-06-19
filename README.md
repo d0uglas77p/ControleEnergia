@@ -28,7 +28,7 @@ O Controle de Energia é um aplicativo de desktop desenvolvido para ajudar os us
 3. Cadastre seu endereço e as informações da sua companhia elétrica.
 4. Adicione seus aparelhos elétricos com as especificações necessárias.
 5. O aplicativo calculará automaticamente o consumo de energia em kWh.
-6. Calculo o custos mensais com base nas informações fornecidas.
+6. Cálcule os custos mensais com base nas informações fornecidas.
 
 ## Informações sobre o Desenvolvedor
 Desenvolvido por: *Douglas Padim Ferreira*.
