@@ -33,12 +33,6 @@ O Controle de Energia é um aplicativo de desktop desenvolvido para ajudar os us
 5. O aplicativo calculará automaticamente o consumo de energia em kWh.
 6. Cálcule os custos mensais com base nas informações fornecidas.
 
-## Informações sobre o Desenvolvedor
-Desenvolvido por: *Douglas Padim Ferreira*.
-
-## Contribuições
-Contribuições são bem-vindas! Se você tiver sugestões ou melhorias, sinta-se à vontade para abrir um pull request/issue.
-
 ## Telas
 
 ### 1 - Login.
@@ -105,10 +99,23 @@ Contribuições são bem-vindas! Se você tiver sugestões ou melhorias, sinta-s
 
 #
 
-### 9 - Selecionar Companha.
+### 9 - Selecionar Companhia.
 <div>
 <img align="center"
 <img src="\screens\9.selecionar_companhia.png" />
 </div>
 
+#
+
+### 10 - Custo Mensal.
+<div>
+<img align="center"
+<img src="\screens\10.custo_mensal.png" />
+</div>
+
+## Informações sobre o Desenvolvedor
+Desenvolvido por: *Douglas Padim Ferreira*.
+
+## Contribuições
+Contribuições são bem-vindas! Se você tiver sugestões ou melhorias, sinta-se à vontade para abrir um pull request/issue.
 
