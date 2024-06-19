@@ -18,7 +18,6 @@ O Controle de Energia é um aplicativo de desktop desenvolvido para ajudar os us
 - **Java Swing**: Biblioteca gráfica utilizada para a interface do usuário
 - **SQLite**: Banco de dados utilizado para armazenamento das informações
 - **Launch4j**: Utilizado para empacotar o aplicativo Java em um executável Windows
-- **Inno Setup Compiler**: Utilizado para criar o instalador do aplicativo
 
 ## Instruções de Instalação
 1. Baixe o instalador do aplicativo fornecido.
