@@ -73,3 +73,42 @@ Contribuições são bem-vindas! Se você tiver sugestões ou melhorias, sinta-s
 
 #
 
+### 5 - Cadastro do Usuário.
+<div>
+<img align="center"
+<img src="\screens\5.cadastro_usuario.png" />
+</div>
+
+#
+
+### 6 - Companhia.
+<div>
+<img align="center"
+<img src="\screens\6.companhia.png" />
+</div>
+
+#
+
+### 7 - Cadastrar Aparelho.
+<div>
+<img align="center"
+<img src="\screens\7.cadastrar_aparelho.png" />
+</div>
+
+#
+
+### 8 - kWh.
+<div>
+<img align="center"
+<img src="\screens\8.kwh_aparelho.png" />
+</div>
+
+#
+
+### 9 - Selecionar Companha.
+<div>
+<img align="center"
+<img src="\screens\9.selecionar_companhia.png" />
+</div>
+
+
