@@ -12,8 +12,10 @@ public class ConexaoBD {
         try {
             // Carrega o driver JDBC do SQLite
             Class.forName("org.sqlite.JDBC");
-            // Retorna a conexão usando o caminhp do banco de dados
-            return DriverManager.getConnection("jdbc:sqlite:controledb");
+            // Constrói o caminho completo para o banco de dados
+            String dbPath = System.getProperty("user.dir") + "/controledb.db";
+            // Retorna a conexão usando o caminho completo do banco de dados
+            return DriverManager.getConnection("jdbc:sqlite:" + dbPath);
         } catch (ClassNotFoundException | SQLException e) {
             // Tratando exceções relacionadas à conexão
             e.printStackTrace();
