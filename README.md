@@ -21,6 +21,7 @@ O Controle de Energia é um aplicativo de desktop desenvolvido para ajudar os us
 
 ## Instruções de Instalação
 1. Baixe o arquivo zip e execute o executável.
+2. Disponivel [Drive](https://drive.google.com/file/d/1SzldlYAx0AqKY5-Qf0OwmbOJUUjDHZSu/view?usp=sharing)
 
 ## Como Usar o Aplicativo
 1. Abra o aplicativo Controle de Energia.
