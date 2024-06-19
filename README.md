@@ -20,8 +20,7 @@ O Controle de Energia é um aplicativo de desktop desenvolvido para ajudar os us
 - **Launch4j**: Utilizado para empacotar o aplicativo Java em um executável Windows
 
 ## Instruções de Instalação
-1. Baixe o instalador do aplicativo fornecido.
-2. Execute o instalador e siga as instruções na tela para concluir a instalação.
+1. Baixe o arquivo zip e execute o executável.
 
 ## Como Usar o Aplicativo
 1. Abra o aplicativo Controle de Energia.
