@@ -1,4 +1,4 @@
-# Controle de Energia
+# Controle de Energia 
 
 ### Aplicativo desktop para gerenciamento de energia, consumo de kWh e custos mensais.
 
@@ -20,8 +20,10 @@ O Controle de Energia é um aplicativo de desktop desenvolvido para ajudar os us
 - **Launch4j**: Utilizado para empacotar o aplicativo Java em um executável Windows
 
 ## Instruções de Instalação
-1. Baixe o arquivo zip e execute o executável.
-2. Disponivel [Drive](https://drive.google.com/file/d/1SzldlYAx0AqKY5-Qf0OwmbOJUUjDHZSu/view?usp=sharing)
+1. Disponível no [Drive](https://drive.google.com/file/d/1SzldlYAx0AqKY5-Qf0OwmbOJUUjDHZSu/view?usp=sharing) ✔
+2. Baixe o arquivo zip
+3. Extraia o zip
+4. Abra o executável para Windows
 
 ## Como Usar o Aplicativo
 1. Abra o aplicativo Controle de Energia.
@@ -36,3 +38,38 @@ Desenvolvido por: *Douglas Padim Ferreira*.
 
 ## Contribuições
 Contribuições são bem-vindas! Se você tiver sugestões ou melhorias, sinta-se à vontade para abrir um pull request/issue.
+
+## Telas
+
+### 1 - Login.
+<div>
+<img align="center"
+<img src="\screens\1.login.png" />
+</div>
+
+#
+
+### 2 - Cadastro.
+<div>
+<img align="center"
+<img src="\screens\2.cadastro.png" />
+</div>
+
+#
+
+### 3 - Início.
+<div>
+<img align="center"
+<img src="\screens\3.inicio.png" />
+</div>
+
+#
+
+### 4 - Ajuda.
+<div>
+<img align="center"
+<img src="\screens\4.ajuda.png" />
+</div>
+
+#
+
